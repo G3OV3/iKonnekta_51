@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "~/Views/Shared/iKonnekta_51_Layout.cshtml";
+}
+
+
+<!-- Register Card -->
+<div class="page flex items-center justify-center bg-[#D9EAFD]">
+    <div class="card" ng-show="showRegistration">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center p-2">Register</h1>
+        <p class="text-[#4A5565] text-center mb-[10px]">Create your resident account</p>
+        <div class="flex flex-col gap-4 sm:gap-6 mb-2">
+
+            <div>
+                <label class="text-base sm:text-lg block mb-2 text-[#364153]">PhySys Card No</label>
+                <input type="text" placeholder="2024-XXXX-XXXX-XXXX"
+                       class="w-full border border-gray-400 p-2 rounded-xl text-sm sm:text-base" />
+            </div>
+
+            <div>
+                <label class="text-base sm:text-lg block mb-2 text-[#364153]">Username</label>
+                <input type="text" placeholder=""
+                       class="w-full border border-gray-400 p-2 rounded-xl" />
+            </div>
+
+            <div>
+                <label class="text-base sm:text-lg block mb-2 text-[#364153]">Password</label>
+                <div class="relative">
+                    <input ng-attr-type="{{ showPassword ? 'text' : 'password' }}" placeholder=""
+                           class="w-full border border-gray-400 p-2 pr-10 rounded-xl" />
+                    <button type="button" ng-click="showPassword = !showPassword"
+                            class="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700">
+                        <!-- Eye Open -->
+                        <svg ng-if="!showPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <!-- Eye Slashed -->
+                        <svg ng-if="showPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95M6.873 6.873A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.973 9.973 0 01-4.415 5.152M15 12a3 3 0 11-4.243-4.243M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="text-base sm:text-lg block mb-2 text-[#364153]">Confirm Password</label>
+                <div class="relative">
+                    <input ng-attr-type="{{ showConfirmPassword ? 'text' : 'password' }}" placeholder=""
+                           class="w-full border border-gray-400 p-2 pr-10 rounded-xl" />
+                    <button type="button" ng-click="showConfirmPassword = !showConfirmPassword"
+                            class="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700">
+                        <!-- Eye Open -->
+                        <svg ng-if="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <!-- Eye Slashed -->
+                        <svg ng-if="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.956 9.956 0 012.293-3.95M6.873 6.873A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a9.973 9.973 0 01-4.415 5.152M15 12a3 3 0 11-4.243-4.243M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn text-white" ng-click="showTFAFunc()">Click to receive the OTP</button>
+
+            <div class="flex justify-center">
+                <p class="text-base sm:text-lg text-[#364153] text-center">
+                    Already have an account?
+                    <a ng-click="navigate('login')" class="text-blue-400 cursor-pointer"> Log in here</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Two-Factor Auth Card -->
+
+    <div class="card" ng-show="showTFA">
+        <h1 class="text-2xl font-bold text-center p-2">iKonnekta-51</h1>
+        <p class="text-[#4A5565] text-center mb-[10px]">Two-factor authentication</p>
+
+        <div class="flex flex-col gap-6 mb-2">
+            <div class="flex gap-4 justify-center">
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[0]" ng-keydown="otpKeydown($event, 0)" ng-change="otpInput(0)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[1]" ng-keydown="otpKeydown($event, 1)" ng-change="otpInput(1)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[2]" ng-keydown="otpKeydown($event, 2)" ng-change="otpInput(2)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[3]" ng-keydown="otpKeydown($event, 3)" ng-change="otpInput(3)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[4]" ng-keydown="otpKeydown($event, 4)" ng-change="otpInput(4)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+                <input type="text" maxlength="1" ng-attr-inputmode="'numeric'"
+                       ng-model="otp[5]" ng-keydown="otpKeydown($event, 5)" ng-change="otpInput(5)"
+                       class="otp-input w-11 h-11 text-center text-lg font-medium border border-gray-300 rounded-lg outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-200" />
+            </div>
+
+            <button class="btn text-white w-full py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 rounded-lg text-sm font-medium transition"
+                    ng-click="verifyOTP()">
+                Confirm OTP
+            </button>
+        </div>
+    </div>
+</div>
+

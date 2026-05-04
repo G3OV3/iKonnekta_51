@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36915.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iKonnekta_51", "iKonnekta_51.csproj", "{30D4D695-34FE-42C8-A10C-CE2270BA31AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30D4D695-34FE-42C8-A10C-CE2270BA31AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30D4D695-34FE-42C8-A10C-CE2270BA31AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30D4D695-34FE-42C8-A10C-CE2270BA31AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30D4D695-34FE-42C8-A10C-CE2270BA31AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65FB5D23-0ADC-417C-AB9D-21965E5C7572}
+	EndGlobalSection
+EndGlobal
