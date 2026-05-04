@@ -959,10 +959,14 @@
     <Content Include="Views\iKonnekta_51\RegistrationPage.cshtml" />
     <Content Include="Views\iKonnekta_51\DashboardPage.cshtml" />
     <Content Include="Views\iKonnekta_51\SubmitRequestPage.cshtml" />
+    <Content Include="Views\iKonnekta_51\HistoryPage_Resident.cshtml" />
+    <Content Include="Views\iKonnekta_51\TrackRequestPage.cshtml" />
+    <Content Include="Views\iKonnekta_51\ResidentProfilePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\iKonnekta_51\ResidentPages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

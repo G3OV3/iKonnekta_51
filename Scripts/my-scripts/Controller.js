@@ -98,4 +98,24 @@
         $scope.sidebarOpen = false
     }
 
+
+    //TrackRequests
+    $scope.requests = [
+        {
+            documentType: "Barangay Clearance",
+            requestId: "REQ-001",
+            status: "Processing",
+            purpose: "Employment",
+            submittedDate: "April 30, 2026",
+            contact: "09171234567",
+            estimatedCompletion: "April 30, 2026"
+        }
+    ];
+
+    $scope.cancelRequest = function (request) {
+        if (confirm("Are you sure you want to cancel this request?")) {
+            request.status = "Cancelled";
+        }
+    };
+
 });
