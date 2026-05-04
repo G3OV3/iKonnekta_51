@@ -958,6 +958,7 @@
     <Content Include="Views\iKonnekta_51\ForgotPasswordPage.cshtml" />
     <Content Include="Views\iKonnekta_51\RegistrationPage.cshtml" />
     <Content Include="Views\iKonnekta_51\DashboardPage.cshtml" />
+    <Content Include="Views\iKonnekta_51\SubmitRequestPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

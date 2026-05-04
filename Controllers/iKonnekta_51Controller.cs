@@ -25,5 +25,9 @@ namespace iKonnekta_51.Controllers
         {
             return View();
         }
+        public ActionResult SubmitRequestPage() 
+        {
+            return View();
+        }
     }
 }
