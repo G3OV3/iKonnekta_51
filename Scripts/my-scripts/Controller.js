@@ -92,7 +92,7 @@
     //Sidebar
     $scope.sidebarOpen = false;
     $scope.toggleSidebar = function () {
-        $scope.sidebarOpen = false;
+        $scope.sidebarOpen = !$scope.sidebarOpen;
     }
     $scope.closeSidebar = function () {
         $scope.sidebarOpen = false
