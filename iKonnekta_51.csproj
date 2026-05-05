@@ -123,6 +123,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\iKonnekta_51Controller.cs" />
     <Compile Include="Controllers\ResidentController.cs" />
+    <Compile Include="Controllers\VStaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -964,11 +965,19 @@
     <Content Include="Views\Resident\TrackRequestPage.cshtml" />
     <Content Include="Views\Resident\ResidentProfilePage.cshtml" />
     <Content Include="Views\Resident\NotificationPage.cshtml" />
+    <Content Include="Views\Shared\_VStaffLayoutPage.cshtml" />
+    <Content Include="Views\VStaff\VDashboardViewPage.cshtml" />
+    <Content Include="Views\VStaff\VManageRequestViewPage.cshtml" />
+    <Content Include="Views\VStaff\VRequestHistory_RecordsViewPage.cshtml" />
+    <Content Include="Views\VStaff\VRegisteredResidentsViewPage.cshtml" />
+    <Content Include="Views\VStaff\VArchivesViewPage.cshtml" />
+    <Content Include="Views\VStaff\VNotificationViewPage.cshtml" />
+    <Content Include="Views\VStaff\VListofResidentsViewPage.cshtml" />
+    <Content Include="Views\VStaff\VAddResidentViewPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
