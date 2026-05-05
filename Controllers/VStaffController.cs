@@ -45,5 +45,9 @@ namespace iKonnekta_51.Controllers
         {
             return View();
         }
+        public ActionResult VViewEditResidentInfoViewPage()
+        {
+            return View();
+        }
     }
 }
