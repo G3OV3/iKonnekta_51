@@ -6,14 +6,7 @@
     $scope.showLogin = true;
     $scope.showTFA = false;
     $scope.showTFAForgotPass = true;
-    
 
-    $scope.showTFAFunc = function () {
-        $scope.showTFA = true;
-        $scope.showRegistration = false;
-        $scope.showLogin = false;
-
-    }
 
     // Navigate Pages
     $scope.navigate = function (page) {
@@ -29,7 +22,13 @@
                 break;
         }
     }
+    // OTP Part
+    $scope.showTFAFunc = function () {
+        $scope.showTFA = true;
+        $scope.showRegistration = false;
+        $scope.showLogin = false;
 
+    }
     // OTP input handling
     $scope.otp = ['', '', '', '', '', ''];
 
@@ -87,8 +86,6 @@
         // call your API with otp here
     };
 
-    // Pages
-
     //Sidebar
     $scope.sidebarOpen = false;
     $scope.toggleSidebar = function () {
@@ -98,6 +95,7 @@
         $scope.sidebarOpen = false
     }
 
+    // Resident Part
 
     //TrackRequests
     $scope.requests = [
@@ -117,5 +115,25 @@
             request.status = "Cancelled";
         }
     };
+
+    //Resident Profile
+    $scope.showProfileCard = true;
+    $scope.showEditProfileFunc = function () {
+        $scope.showEditProfileCard = true;
+        $scope.showProfileCard = false;
+
+    }
+
+    $scope.cancelUpdeteProfileFunc = function () {
+        $scope.showEditProfileCard = false;
+        $scope.showProfileCard = true;
+    }
+
+    $scope.saveChangesProfileFunc = function () {
+        Swal.fire({
+            icon: 'success',
+            text: 'Profile updated successfully'
+        });
+    }
 
 });

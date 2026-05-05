@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\iKonnekta_51Controller.cs" />
+    <Compile Include="Controllers\ResidentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -957,16 +958,17 @@
     <Content Include="Views\iKonnekta_51\LoginPage.cshtml" />
     <Content Include="Views\iKonnekta_51\ForgotPasswordPage.cshtml" />
     <Content Include="Views\iKonnekta_51\RegistrationPage.cshtml" />
-    <Content Include="Views\iKonnekta_51\DashboardPage.cshtml" />
-    <Content Include="Views\iKonnekta_51\SubmitRequestPage.cshtml" />
-    <Content Include="Views\iKonnekta_51\HistoryPage_Resident.cshtml" />
-    <Content Include="Views\iKonnekta_51\TrackRequestPage.cshtml" />
-    <Content Include="Views\iKonnekta_51\ResidentProfilePage.cshtml" />
+    <Content Include="Views\Resident\DashboardPage.cshtml" />
+    <Content Include="Views\Resident\SubmitRequestPage.cshtml" />
+    <Content Include="Views\Resident\HistoryPage_Resident.cshtml" />
+    <Content Include="Views\Resident\TrackRequestPage.cshtml" />
+    <Content Include="Views\Resident\ResidentProfilePage.cshtml" />
+    <Content Include="Views\Resident\NotificationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\iKonnekta_51\ResidentPages\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

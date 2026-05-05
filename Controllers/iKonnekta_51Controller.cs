@@ -21,25 +21,7 @@ namespace iKonnekta_51.Controllers
         {
                 return View();
         }
-        public ActionResult DashboardPage() 
-        {
-            return View();
-        }
-        public ActionResult SubmitRequestPage() 
-        {
-            return View();
-        }
-        public ActionResult HistoryPage_Resident() 
-        {
-            return View();
-        }
-        public ActionResult TrackRequestPage() 
-        {
-            return View();
-        }
-            public ActionResult ResidentProfilePage()
-            {
-                 return View();
-            }
+        
+        
     }
 }
