@@ -81,7 +81,149 @@
     </aside>
 
     <main class="main-content">
-        
+        <div class="p-6">
+
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Notifications</h2>
+            <p class="text-sm text-gray-500 mb-6">Stay updated on your document requests</p>
+
+            <!-- Tab Buttons -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2">
+                    <button class="px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ease-in-out"
+                            ng-class="currentTab === 'all' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50'"
+                            ng-click="setTab('all')">
+                        All
+                    </button>
+                    <button class="px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ease-in-out"
+                            ng-class="currentTab === 'unread' ? 'bg-blue-500 text-white border-blue-500' : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300 hover:text-blue-600 hover:bg-blue-50'"
+                            ng-click="setTab('unread')">
+                        Unread
+                        <span ng-show="unreadCount() > 0"
+                              class="ml-1 bg-blue-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                            {{ unreadCount() }}
+                        </span>
+                    </button>
+                </div>
+                <button ng-show="unreadCount() > 0"
+                        ng-click="markAllRead()"
+                        class="text-xs text-blue-500 hover:text-blue-700 font-medium transition-colors">
+                    Mark all as read
+                </button>
+            </div>
+
+            <!-- All Tab -->
+            <div ng-show="currentTab === 'all'"
+                 class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6 mb-5">
+
+                <div class="flex items-center gap-2 mb-5">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
+                    <h3 class="text-sm font-black text-gray-800 uppercase tracking-wide">All</h3>
+                </div>
+
+                <div ng-repeat="n in allNotifications"
+                     class="flex items-start gap-3 py-4 border-b border-gray-100 last:border-0">
+
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-base"
+                         ng-class="n.iconBg">
+                        {{ n.icon }}
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-0.5 flex-wrap">
+                            <span class="text-sm font-medium text-gray-900">{{ n.title }}</span>
+                            <span class="text-xs font-medium px-2 py-0.5 rounded-full"
+                                  ng-class="n.badgeCss">{{ n.badge }}</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-1">{{ n.sub }}</p>
+                        <span class="text-xs text-gray-400">{{ n.time }}</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0 mt-1">
+
+                        <!-- Mark as read / unread -->
+                        <button ng-click="toggleRead(n)"
+                                ng-show="!n.read"
+                                class="text-xs text-blue-500 hover:text-blue-700 font-medium transition-colors whitespace-nowrap">
+                            Mark as read
+                        </button>
+                        <button ng-click="toggleRead(n)"
+                                ng-show="n.read"
+                                class="text-xs text-gray-400 hover:text-gray-600 font-medium transition-colors whitespace-nowrap">
+                            Mark as unread
+                        </button>
+
+                        @*<button ng-click="dismiss(n)"
+                                class="text-gray-300 hover:text-gray-500 text-xs px-1">
+                            ✕
+                        </button>*@
+                    </div>
+                </div>
+
+                <!-- All: Empty State -->
+                <div ng-show="allNotifications.length === 0"
+                     class="flex flex-col items-center justify-center py-12 gap-3">
+                    <p class="text-base font-medium text-gray-800">No Notifications</p>
+                    <p class="text-sm text-gray-400">You're all caught up! Check back later for updates.</p>
+                </div>
+            </div>
+
+            <!-- Unread Tab -->
+            <div ng-show="currentTab === 'unread'"
+                 class="bg-white border border-gray-100 rounded-2xl shadow-sm p-6 mb-5">
+
+                <div class="flex items-center gap-2 mb-5">
+                    <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                    <h3 class="text-sm font-black text-gray-800 uppercase tracking-wide">Unread</h3>
+                </div>
+
+                <div ng-repeat="n in unreadNotifications()"
+                     class="flex items-start gap-3 py-4 border-b border-gray-100 last:border-0">
+
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-base"
+                         ng-class="n.iconBg">
+                        {{ n.icon }}
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-0.5 flex-wrap">
+                            <span class="text-sm font-medium text-gray-900">{{ n.title }}</span>
+                            <span class="text-xs font-medium px-2 py-0.5 rounded-full"
+                                  ng-class="n.badgeCss">{{ n.badge }}</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-1">{{ n.sub }}</p>
+                        <span class="text-xs text-gray-400">{{ n.time }}</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0 mt-1">
+
+                        <!-- Mark as read (unread tab only shows unread, so only one button needed) -->
+                        <button ng-click="toggleRead(n)"
+                                class="text-xs text-blue-500 hover:text-blue-700 font-medium transition-colors whitespace-nowrap">
+                            Mark as read
+                        </button>
+
+                        @*<button ng-click="dismiss(n)"
+                                class="text-gray-300 hover:text-gray-500 text-xs px-1">
+                            ✕
+                        </button>*@
+                    </div>
+                </div>
+
+                <!-- Unread: Empty State -->
+                <div ng-show="unreadCount() === 0"
+                     class="flex flex-col items-center justify-center py-12 gap-3">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                         stroke="#9ca3af" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
+                    <p class="text-base font-medium text-gray-800">No Unread Notifications</p>
+                    <p class="text-sm text-gray-400">You're all caught up! Check back later for updates.</p>
+                </div>
+            </div>
+
+        </div>
     </main>
+
 </div>
 

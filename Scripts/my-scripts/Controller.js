@@ -136,4 +136,44 @@
         });
     }
 
+    //Notification 
+    $scope.currentTab = 'all';
+
+  
+    $scope.allNotifications = [
+        {
+            id: 1, icon: '📄', iconBg: 'bg-blue-50',
+            badge: 'Processing', badgeCss: 'bg-blue-100 text-blue-700',
+            title: 'Document request approved',
+            sub: 'Your Certification of proof of Residency is processing.',
+            time: 'Just now', read: false,
+        },
+    ];
+
+    $scope.setTab = function (tab) {
+        $scope.currentTab = tab;
+    };
+
+    $scope.unreadNotifications = function () {
+        return $scope.allNotifications.filter(function (n) { return !n.read; });
+    };
+
+    $scope.unreadCount = function () {
+        return $scope.allNotifications.filter(function (n) { return !n.read; }).length;
+    };
+
+    $scope.toggleRead = function (n) {
+        n.read = !n.read;
+    };
+
+    //$scope.dismiss = function (n) {
+    //    var idx = $scope.allNotifications.indexOf(n);
+    //    if (idx !== -1) $scope.allNotifications.splice(idx, 1);
+    //};
+
+    $scope.markAllRead = function () {
+        $scope.allNotifications.forEach(function (n) { n.read = true; });
+    };
+
+
 });
