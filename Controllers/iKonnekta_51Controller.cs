@@ -19,9 +19,7 @@ namespace iKonnekta_51.Controllers
         }
         public ActionResult RegistrationPage() 
         {
-                return View();
+           return View();
         }
-        
-        
     }
 }
