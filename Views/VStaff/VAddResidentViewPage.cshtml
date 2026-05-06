@@ -3,157 +3,60 @@
 }
 <main class="app-container">
     <div class="main-content">
-        <div class="card max-w-2xl mx-auto">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-900">Add A resident</h2>
-                    <p class="text-sm text-gray-500">Fill out the List a Resident</p>
+        <div class="content-wrapper p-6">
+            <h1 class="greeting-user">Archieves</h1>
+            <p class="shortDescription">View all Archived User Accounts</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 mb-8 shadow-sm">
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+                <!-- Search Input -->
+                <div class="relative flex-1 w-full">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    </div>
+                    <input type="text"
+                           class="block w-full pl-11 pr-4 py-3 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all text-sm"
+                           placeholder="Search by PhySys Card No., Resident Name, ...">
+                </div>
+                <!-- Filter Button -->
+                <button class="icon-btn p-3 bg-gray-50 border border-gray-100 rounded-xl hover:bg-gray-100">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
+                </button>
+                <!-- Status Dropdown Placeholder -->
+                <div class="w-full md:w-48">
+                    <select class="block w-full px-4 py-3 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none text-sm appearance-none">
+                        <option>Arranged By Latest</option>
+                        <option>Arranged By Oldest</option>
+                    </select>
                 </div>
             </div>
-            <div class="space-y-6">
-                <!-- Row 1 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">PhySys Card No.</label>
-                        <input type="text" 
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name Name</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                    <div class="md:col-span-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div class="md:col-span-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Suffix</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div class="md:col-span-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Birth Date</label>
-                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" >
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Birth Place</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Row 4 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="dropDown">Sex</label>
-                        <select class="dropdown-label">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Disclosed">Disclosed</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="dropDown">Civil Status</label>
-                        <select class="dropdown-label">
-                            <option>Single</option>
-                            <option>Married</option>
-                            <option>Widowed</option>
-                            <option>Separated</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="dropDown">Religion</label>
-                        <select class="dropdown-label">
-                            <option>Roman Catholic</option>
-                            <option>Iglesia Ni Cristo</option>
-                            <option>Islam</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Row 5 -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Citizenship</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Row 6 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Proffession</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Row 7 -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="dropDown">Educational Attainment</label>
-                        <select class="dropdown-label">
-                            <option>Elementary</option>
-                            <option>High School</option>
-                            <option>Vocational</option>
-                            <option>College Graduate</option>
-                            <option>
-                                Post-Graduate
-                            </option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Registered</label>
-                        <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Household Number</label>
-                        <input type="text"
-                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-col md:flex-row gap-4 pt-6 mt-8 border-t border-gray-100">
-                    <button type="button" class="flex-1 py-3 border border-gray-200 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-all" ng-click="toggleForm()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="flex-1 py-3 bg-[#155DFC] text-white rounded-xl font-bold shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">
-                        Register Resident
-                    </button>
-                </div>
+        </div>
+        <div class="md:col-span-9 col-span-12 p-4 bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex justify-center">
+            <div class="overflow-x-auto w-full">
+                <table class="w-full custom-table border-collapse text-center">
+                    <thead>
+                        <tr class="bg-[#FBFDFF]">
+                            <th class="border-b border-gray-100 px-4 py-4">PhySys Card No.</th>
+                            <th class="border-b border-gray-100 px-4 py-4">Last Name</th>
+                            <th class="border-b border-gray-100 px-4 py-4">First Name</th>
+                            <th class="border-b border-gray-100 px-4 py-4">Middle Initial</th>
+                            <th class="border-b border-gray-100 px-4 py-4">Suffix</th>
+                            <th class="border-b border-gray-100 px-4 py-4">Date Archived</th>
+                            <th class="border-b border-gray-100 px-4 py-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="font-semibold text-gray-900 px-4 py-4">1234-5678-9012-3456</td>
+                            <td class="font-semibold text-gray-900 px-4 py-4">Dela Cruz</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">Juan</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">D</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">III</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">4/26/2026</td>
+                            <td class="px-4 py-4"><button class="btn-view hover:text-green-400">Unarchive</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
