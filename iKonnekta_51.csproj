@@ -975,11 +975,8 @@
     <Content Include="Views\VStaff\VListofResidentsViewPage.cshtml" />
     <Content Include="Views\VStaff\VAddResidentViewPage.cshtml" />
     <Content Include="Views\VStaff\VViewEditResidentInfoViewPage.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\VStaff\VViewRequestDetailsViewPage.cshtml" />
-=======
     <Content Include="Views\Shared\_ResidentLayout.cshtml" />
->>>>>>> 62c05afcc00fa5bf3bc6c75777a9bc2d556354fa
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
