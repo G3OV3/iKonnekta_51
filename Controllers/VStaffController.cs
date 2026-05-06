@@ -49,5 +49,9 @@ namespace iKonnekta_51.Controllers
         {
             return View();
         }
+        public ActionResult VViewRequestDetailsViewPage()
+        {
+            return View();
+        }
     }
 }
