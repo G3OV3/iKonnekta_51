@@ -34,7 +34,7 @@
             case 'requestHistorypage':
                 window.location.href = "/Resident/HistoryPage_Resident"
                 break;
-            case 'notification':
+            case 'residentNotification':
                 window.location.href = "/Resident/NotificationPage"
                 break;
             case 'residentProfile':
