@@ -13,8 +13,6 @@ namespace iKonnekta_51.Controllers
         {
             return View();
         }
-
-
         public ActionResult VDashboardViewPage()
         {
             return View();

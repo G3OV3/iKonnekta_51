@@ -20,54 +20,6 @@
             case 'forgotPassword':
                 window.location.href = "/iKonnekta_51/ForgotPasswordPage"
                 break;
-
-            // Resident Pages
-            case 'residentDashboard':
-                window.location.href = "/Resident/DashboardPage"
-                break;
-            case 'submitRequest':
-                window.location.href = "/Resident/SubmitRequestPage"
-                break;
-            case 'trackRequest':
-                window.location.href = "/Resident/TrackRequestPage"
-                break;
-            case 'requestHistorypage':
-                window.location.href = "/Resident/HistoryPage_Resident"
-                break;
-            case 'notification':
-                window.location.href = "/Resident/NotificationPage"
-                break;
-            case 'residentProfile': 
-                window.location.href = "/Resident/ResidentProfilePage"
-                break;
-
-            // Staff Pages
-            case 'staffDashboard':
-                window.location.href = "/VStaff/VDashboardViewPage"  
-                break;
-            case 'AddResident':
-                window.location.href = "/VStaff/VAddResidentViewPage"
-                break;
-            case 'Archive':
-                window.location.href = "/VStaff/VArchivesViewPage"
-                break;
-            case 'ListOfResidents':
-                window.location.href = "/VStaff/VListofResidentsViewPage"
-                break;
-            case 'ManageRequests':
-                window.location.href = "/VStaff/VManageRequestViewPage"
-                break;
-            case 'staffNotification': 
-                window.location.href = "/VStaff/VNotificationViewPage"
-                break;
-            case 'AccsOfResidents':
-                window.location.href = "/VStaff/VRegisteredResidentsViewPage"
-                break;
-            case 'requestHistoryRecords':
-                window.location.href = "/VStaff/VRequestHistory_RecordsViewPage"
-                break;
-            case 'editResidentInfo':
-                window.location.href = "/VStaff/VViewEditResidentInfoViewPage"
         }
     }
     // OTP Part
@@ -143,18 +95,6 @@
         $scope.sidebarOpen = false
     }
 
-    //Prevent Letters for phone textbox
-    $scope.$watch('phone', function (newVal, oldVal) {
-        if (!newVal) return;
-
-        var clean = newVal.replace(/[^0-9]/g, '');
-
-        if (clean !== newVal) {
-            $scope.phone = clean;
-        }
-    });
-
-
     // Resident Part
 
     //TrackRequests
@@ -202,7 +142,8 @@
   
     $scope.allNotifications = [
         {
-            id: 1, icon: '📄', 
+            id: 1, icon: '📄', iconBg: 'bg-blue-50',
+            badge: 'Processing', badgeCss: 'bg-blue-100 text-blue-700',
             title: 'Document request approved',
             sub: 'Your Certification of proof of Residency is processing.',
             time: 'Just now', read: false,
@@ -233,7 +174,6 @@
     $scope.markAllRead = function () {
         $scope.allNotifications.forEach(function (n) { n.read = true; });
     };
-
 
 
 });
