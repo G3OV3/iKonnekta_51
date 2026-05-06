@@ -20,6 +20,24 @@
             case 'forgotPassword':
                 window.location.href = "/iKonnekta_51/ForgotPasswordPage"
                 break;
+            case 'residentDashboard':
+                window.location.href = "/Resident/DashboardPage"
+                break;
+            case 'submitRequest':
+                window.location.href = "/Resident/SubmitRequestPage"
+                break;
+            case 'trackRequest':
+                window.location.href = "/Resident/TrackRequestPage"
+                break;
+            case 'requestHistorypage':
+                window.location.href = "/Resident/HistoryPage_Resident"
+                break;
+            case 'notification':
+                window.location.href = "/Resident/NotificationPage"
+                break;
+            case 'residentProfile': 
+                window.location.href = "/Resident/ResidentProfilePage"
+                break;
         }
     }
     // OTP Part
@@ -136,6 +154,16 @@
         });
     }
 
+    $scope.$watch('phone', function (newVal, oldVal) {
+        if (!newVal) return;
+
+        var clean = newVal.replace(/[^0-9]/g, '');
+
+        if (clean !== newVal) {
+            $scope.phone = clean;
+        }
+    });
+
     //Notification 
     $scope.currentTab = 'all';
 
@@ -174,6 +202,7 @@
     $scope.markAllRead = function () {
         $scope.allNotifications.forEach(function (n) { n.read = true; });
     };
+
 
 
 });
