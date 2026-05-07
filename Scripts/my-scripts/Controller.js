@@ -247,6 +247,10 @@
         n.read = !n.read;
     };
 
+    $scope.markAllRead = function () {
+        $scope.allNotifications.forEach(function (n) { n.read = true; });
+    };
+
     //Submit Document Request
 
     $scope.qty = 1;
@@ -262,100 +266,138 @@
     };
 
     // Purpose
+    $scope.selectedDocument = '';
     $scope.selectedPurpose = '';
-    $scope.specificPurpose = '';
+ 
 
     $scope.resetSpecific = function () {
-        $scope.specificPurpose = '';
+        $scope.selectedPurpose = '';
     };
 
-    $scope.subOptions = {
-        education: [
-            { value: 'enrollment', label: 'Enrollment' },
-            { value: 'scholarship_application', label: 'Scholarship Application' },
-            { value: 'transfer_of_school', label: 'Transfer of School' },
-            { value: 'graduation_requirement', label: 'Graduation Requirement' },
-            { value: 'school_requirement', label: 'School Requirement (General)' }
+    $scope.options = {
+        barangayClearance: [
+            { value: 'job_application', label: 'Job application' },
+            { value: 'business_permit', label: 'Business permit' },
+            { value: 'passport_requirement', label: 'Passport requirement' },
+            { value: 'bank_requirement', label: 'Bank requirement' }
         ],
-        employment: [
-            { value: 'job_application', label: 'Job Application' },
-            { value: 'pre_employment', label: 'Pre-Employment Requirement' },
-            { value: 'ojt_internship', label: 'OJT / Internship Requirement' },
-            { value: 'contract_requirement', label: 'Contract Requirement' }
+        barangayCertificate: [
+            { value: 'general_certification', label: 'General certification' },
+            { value: 'personal_use', label: 'Personal use' },
+            { value: 'proof_of_identity', label: 'Proof of identity' },
+            { value: 'community_verification', label: 'Community verification' }
         ],
-        medical: [
-            { value: 'hospital_admission', label: 'Hospital Admission Requirement' },
-            { value: 'medical_assistance', label: 'Medical Assistance' },
-            { value: 'philhealth', label: 'PhilHealth Requirement' },
-            { value: 'emergency_medical', label: 'Emergency Medical Support' }
+        certificateOfResidency: [
+            { value: 'school_enrollment', label: 'School requirement' },
+            { value: 'scholarship_application', label: 'Scholarship application' },
+            { value: 'passport_application', label: 'Passport application' },
+            { value: 'bank_account_opening', label: 'Bank account opening' },
+            { value: 'voter_registration', label: 'Voter registration' },
+            { value: 'housing_application', label: 'Housing application' },
+            { value: 'id_application', label: 'ID application' }
+
         ],
-        financial_assistance: [
-            { value: 'financial_aid', label: 'Financial Aid Application' },
-            { value: 'scholarship_financial', label: 'Scholarship Financial Support' },
-            { value: 'loan_application', label: 'Loan Application' },
-            { value: 'charity_assistance', label: 'Charity Assistance' }
+        certificateOfIdigency: [
+            { value: 'medical_assistance', label: 'Medical assistance' },
+            { value: 'hospital_admission', label: 'Hospital admission' },
+            { value: 'financial_assistance', label: 'Financial assistance' },
+            { value: 'charity_assistance', label: 'Charity Assistance' },
+            { value: 'scholarship_application', label: 'Scholarship application' },
+            { value: 'burial_assistance', label: 'Burial assistance' },
+            { value: '4Ps/DSWD_requirement', label: '4Ps / DSWD requirement' },
         ],
-        banking: [
-            { value: 'bank_account_opening', label: 'Bank Account Opening' },
-            { value: 'credit_loan_processing', label: 'Credit / Loan Processing' },
-            { value: 'verification_requirement', label: 'Verification Requirement' }
+        certificateOfCohabitation: [
+            { value: 'solo_parent_benefits', label: 'Solo parent benefits' },
+            { value: 'DSWD_application', label: 'DSWD application' },
+            { value: 'school_assistance', label: 'School assistance' },
+            { value: 'government_welfare_programs', label: 'Government welfare programs' }
         ],
-        government: [
-            { value: 'passport_application', label: 'Passport Application' },
+        firstTimeJobSeekerCert: [
             { value: 'nbi_police_clearance', label: 'NBI / Police Clearance Requirement' },
-            { value: 'sss_gsis_pagibig', label: 'SSS / GSIS / PAG-IBIG Requirement' },
-            { value: 'voter_registration', label: 'Voter Registration' },
-            { value: 'government_transaction', label: 'Government Transaction Support' }
-        ],
-        residency: [
-            { value: 'proof_of_residency', label: 'Proof of Residency' },
-            { value: 'address_verification', label: 'Address Verification' },
-            { value: 'barangay_certification', label: 'Barangay Certification' },
-            { value: 'id_application', label: 'ID Application' },
-            { value: 'transfer_of_residence', label: 'Transfer of Residence' }
-        ],
-        business: [
-            { value: 'business_permit', label: 'Business Permit Application' },
-            { value: 'dti_registration', label: 'DTI Registration Requirement' },
-            { value: 'market_vendor_permit', label: 'Market Vendor Permit' },
-            { value: 'small_business_support', label: 'Small Business Support' }
-        ],
-        social_welfare: [
-            { value: 'solo_parent', label: 'Solo Parent Application' },
-            { value: 'senior_citizen', label: 'Senior Citizen Benefits' },
-            { value: 'pwd_assistance', label: 'PWD Assistance' },
-            { value: '4ps_dswd', label: '4Ps / DSWD Programs' }
-        ],
-        housing: [
-            { value: 'housing_application', label: 'Housing Application' },
-            { value: 'relocation_assistance', label: 'Relocation Assistance' },
-            { value: 'utility_connection', label: 'Utility Connection (Water/Electricity/Internet)' }
-        ],
-        travel: [
-            { value: 'travel_requirement', label: 'Travel Requirement' },
-            { value: 'personal_identification', label: 'Personal Identification Support' },
-            { value: 'character_reference', label: 'Character Reference' }
-        ],
-        legal: [
-            { value: 'court_requirement', label: 'Court Requirement' },
-            { value: 'affidavit_support', label: 'Affidavit Support' },
-            { value: 'legal_verification', label: 'Legal Verification' },
-            { value: 'police_documentation', label: 'Police-Related Documentation' }
-        ],
-        others: [
-            { value: 'barangay_clearance_general', label: 'Barangay Clearance (General Purpose)' },
-            { value: 'other_not_specified', label: 'Other / Not Specified' },
+            { value: 'employment_application', label: 'Employment application' },
+            { value: 'Pre-employment requirements', label: 'Pre-employment requirements' }
+        
         ]
     };
 
-    //$scope.dismiss = function (n) {
-    //    var idx = $scope.allNotifications.indexOf(n);
-    //    if (idx !== -1) $scope.allNotifications.splice(idx, 1);
+    //$scope.subOptions = {
+    //    education: [
+    //        { value: 'enrollment', label: 'Enrollment' },
+    //        { value: 'scholarship_application', label: 'Scholarship Application' },
+    //        { value: 'transfer_of_school', label: 'Transfer of School' },
+    //        { value: 'graduation_requirement', label: 'Graduation Requirement' },
+    //        { value: 'school_requirement', label: 'School Requirement (General)' }
+    //    ],
+    //    employment: [
+    //        { value: 'job_application', label: 'Job Application' },
+    //        { value: 'pre_employment', label: 'Pre-Employment Requirement' },
+    //        { value: 'ojt_internship', label: 'OJT / Internship Requirement' },
+    //        { value: 'contract_requirement', label: 'Contract Requirement' }
+    //    ],
+    //    medical: [
+    //        { value: 'hospital_admission', label: 'Hospital Admission Requirement' },
+    //        { value: 'medical_assistance', label: 'Medical Assistance' },
+    //        { value: 'philhealth', label: 'PhilHealth Requirement' },
+    //        { value: 'emergency_medical', label: 'Emergency Medical Support' }
+    //    ],
+    //    financial_assistance: [
+    //        { value: 'financial_aid', label: 'Financial Aid Application' },
+    //        { value: 'scholarship_financial', label: 'Scholarship Financial Support' },
+    //        { value: 'loan_application', label: 'Loan Application' },
+    //        { value: 'charity_assistance', label: 'Charity Assistance' }
+    //    ],
+    //    banking: [
+    //        { value: 'bank_account_opening', label: 'Bank Account Opening' },
+    //        { value: 'credit_loan_processing', label: 'Credit / Loan Processing' },
+    //        { value: 'verification_requirement', label: 'Verification Requirement' }
+    //    ],
+    //    government: [
+    //        { value: 'passport_application', label: 'Passport Application' },
+    //        { value: 'nbi_police_clearance', label: 'NBI / Police Clearance Requirement' },
+    //        { value: 'sss_gsis_pagibig', label: 'SSS / GSIS / PAG-IBIG Requirement' },
+    //        { value: 'voter_registration', label: 'Voter Registration' },
+    //        { value: 'government_transaction', label: 'Government Transaction Support' }
+    //    ],
+    //    residency: [
+    //        { value: 'proof_of_residency', label: 'Proof of Residency' },
+    //        { value: 'address_verification', label: 'Address Verification' },
+    //        { value: 'barangay_certification', label: 'Barangay Certification' },
+    //        { value: 'id_application', label: 'ID Application' },
+    //        { value: 'transfer_of_residence', label: 'Transfer of Residence' }
+    //    ],
+    //    business: [
+    //        { value: 'business_permit', label: 'Business Permit Application' },
+    //        { value: 'dti_registration', label: 'DTI Registration Requirement' },
+    //        { value: 'market_vendor_permit', label: 'Market Vendor Permit' },
+    //        { value: 'small_business_support', label: 'Small Business Support' }
+    //    ],
+    //    social_welfare: [
+    //        { value: 'solo_parent', label: 'Solo Parent Application' },
+    //        { value: 'senior_citizen', label: 'Senior Citizen Benefits' },
+    //        { value: 'pwd_assistance', label: 'PWD Assistance' },
+    //        { value: '4ps_dswd', label: '4Ps / DSWD Programs' }
+    //    ],
+    //    housing: [
+    //        { value: 'housing_application', label: 'Housing Application' },
+    //        { value: 'relocation_assistance', label: 'Relocation Assistance' },
+    //        { value: 'utility_connection', label: 'Utility Connection (Water/Electricity/Internet)' }
+    //    ],
+    //    travel: [
+    //        { value: 'travel_requirement', label: 'Travel Requirement' },
+    //        { value: 'personal_identification', label: 'Personal Identification Support' },
+    //        { value: 'character_reference', label: 'Character Reference' }
+    //    ],
+    //    legal: [
+    //        { value: 'court_requirement', label: 'Court Requirement' },
+    //        { value: 'affidavit_support', label: 'Affidavit Support' },
+    //        { value: 'legal_verification', label: 'Legal Verification' },
+    //        { value: 'police_documentation', label: 'Police-Related Documentation' }
+    //    ],
+    //    others: [
+    //        { value: 'barangay_clearance_general', label: 'Barangay Clearance (General Purpose)' },
+    //        { value: 'other_not_specified', label: 'Other / Not Specified' },
+    //    ]
     //};
-
-    $scope.markAllRead = function () {
-        $scope.allNotifications.forEach(function (n) { n.read = true; });
-    };
 
     //Staff Pages
 

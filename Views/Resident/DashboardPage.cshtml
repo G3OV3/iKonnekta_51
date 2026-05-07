@@ -22,7 +22,7 @@
 
                 </div>
             </div>
-            <div class="stat-card border border-[#FFF085] bg-[#FEFCE8]">
+            <div class="stat-card border border-[#FFF085] bg-[#FEFCE8]" >
                 <div class="stat-card-inner">
                     <div>
                         <p class="stat-label text-[#A65F00]">Processing</p>
@@ -74,7 +74,7 @@
                                 </svg>
                             </div>
 
-                            <div class="flex flex-col">
+                            <div class="flex flex-col" ng-click="navigate('submitRequest')">
                                 <h4 class="text-lg font-semibold text-[#101828]">Submit New Request</h4>
                                 <p class="text-base text-[#4A5565]">Request a new document</p>
                             </div>
@@ -92,7 +92,7 @@
                             </div>
 
 
-                            <div class="flex flex-col">
+                            <div class="flex flex-col" ng-click="navigate('trackRequest')">
                                 <h4 class="text-lg font-semibold text-[#101828]">Track Requests</h4>
                                 <p class="text-base text-[#4A5565]">View all active requests</p>
                             </div>
@@ -108,7 +108,7 @@
 
                         </div>
 
-                        <div class="flex flex-col">
+                        <div class="flex flex-col" ng-click="navigate('requestHistorypage')">
                             <h4 class="text-lg font-semibold text-[#101828]">Request History</h4>
                             <p class="text-base text-[#4A5565]">View all pasts requests</p>
                         </div>
@@ -133,10 +133,10 @@
                         <p class="text-xs text-gray-500">Purpose:</p>
                         <p class="text-xs text-gray-400 mt-2">Submitted: </p>
                     </div>
-                    <a href=""
-                       class="text-blue-600 text-sm hover:underline self-center">
+                    @*<a href=""
+                       class="text-blue-600 text-sm hover:underline self-center" ng-click="navigate('trackRequest')">
                         View Details
-                    </a>
+                    </a>*@
                 </div>
             </div>
 

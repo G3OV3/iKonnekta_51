@@ -24,37 +24,31 @@
             <!-- Document Type -->
             <div class="mb-4">
                 <label class="dropDown">Document Type</label>
-                <select class="dropdown-label">
+                <select class="dropdown-label" ng-model="selectedDocument" ng-change="resetSpecific()">
                     <option value="">Select Document</option>
-                    <option value="barangay_clearance">Barangay Clearance</option>
-                    <option value="cedula">Cedula</option>
-                    <option value="indigency">Indigency</option>
+                    <option value="barangayClearance">Barangay Clearance</option>
+                    <option value="barangayCertificate">Barangay Certificate</option>
+                    <option value="certificateOfResidency">Certificate of Residency</option>
+                    <option value="certificateOfIdigency">Certificate of Indigency</option>
+                    <option value="certificateOfCohabitation">Certificate of Cohabitation</option>
+                    <option value="firstTimeJobSeekerCert">First Time Job Seeker Certificate</option>
                 </select>
             </div>
 
             <!-- Purpose -->
             <div class="mb-4">
                 <label class="dropDown">Purpose</label>
-                <select class="dropdown-label" ng-model="selectedPurpose" ng-change="resetSpecific()">
+                <select class="dropdown-label" ng-model="selectedPurpose">
                     <option value="">---</option>
-                    <option value="education">Education</option>
-                    <option value="employment">Employment</option>
-                    <option value="medical">Medical / Health</option>
-                    <option value="financial_assistance">Financial Assistance</option>
-                    <option value="banking">Banking / Finance</option>
-                    <option value="government">Government Requirements</option>
-                    <option value="residency">Residency / Identity</option>
-                    <option value="business">Business / Trade</option>
-                    <option value="social_welfare">Social Welfare</option>
-                    <option value="housing">Housing / Utilities</option>
-                    <option value="travel">Travel / Personal Use</option>
-                    <option value="legal">Legal / Court Related</option>
-                    <option value="others">General / Others</option>
+                    <option ng-repeat="option in options[selectedDocument]"
+                            ng-value="option.value">
+                        {{ option.label }}
+                    </option>
                 </select>
             </div>
 
             <!-- Specific Purpose -->
-            <div class="mb-4" ng-show="selectedPurpose">
+            <!--<div class="mb-4" ng-show="selectedPurpose">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Specify Purpose</label>
                 <select class="dropdown-label" ng-model="specificPurpose">
                     <option value="">--- Select ---</option>
@@ -63,15 +57,15 @@
                         {{ option.label }}
                     </option>
                 </select>
-            </div>
+            </div>-->
 
             <!-- Specific Purpose -->
-            <div class="mb-4" ng-show="specificPurpose === 'other_not_specified'">
+            <!--<div class="mb-4" ng-show="specificPurpose === 'other_not_specified'">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Please specify</label>
                 <input type="text" ng-model="otherPurposeText"
                        placeholder="Please describe your purpose..."
                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
+            </div>-->
 
             <!--Qty of request document-->
             <div class="mb-4">

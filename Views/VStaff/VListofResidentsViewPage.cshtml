@@ -3,7 +3,7 @@
 }
 <main class="app-container">
     <div class="main-content">
-        <div class="w-full flex items-center justify-between">
+        <div class="w-full flex items-center justify-between p-6">
 
             <div>
                 <h1 class="greeting-user">List of Residents</h1>
@@ -11,7 +11,7 @@
             </div>
 
             <button class="bg-blue-600 hover:bg-blue-700 transition-colors text-white
-    text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
+             text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
                     ng-click="navigate('AddResident')">
                 Add Resident
             </button>
@@ -37,10 +37,12 @@
                     <select class="block w-full px-4 py-3 border border-gray-100 rounded-xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-100 outline-none text-sm appearance-none">
                         <option>Arranged By Latest</option>
                         <option>Arranged By Oldest</option>
+                        
                     </select>
                 </div>
             </div>
         </div>
+        
         <div class="md:col-span-9 col-span-12 p-4 bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex justify-center">
             <div class="overflow-x-auto w-full">
                 <table class="w-full custom-table border-collapse text-center">
