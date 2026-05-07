@@ -35,58 +35,110 @@
             <!-- Purpose -->
             <div class="mb-4">
                 <label class="dropDown">Purpose</label>
-                <select class="dropdown-label">
+                <select class="dropdown-label" ng-model="selectedPurpose" ng-change="resetSpecific()">
+                    <option value="">---</option>
+                    <option value="education">Education</option>
                     <option value="employment">Employment</option>
-                    <option value="travel">Travel</option>
-                    <option value="school">School</option>
-                    <option value="loan">Loan</option>
+                    <option value="medical">Medical / Health</option>
+                    <option value="financial_assistance">Financial Assistance</option>
+                    <option value="banking">Banking / Finance</option>
+                    <option value="government">Government Requirements</option>
+                    <option value="residency">Residency / Identity</option>
+                    <option value="business">Business / Trade</option>
+                    <option value="social_welfare">Social Welfare</option>
+                    <option value="housing">Housing / Utilities</option>
+                    <option value="travel">Travel / Personal Use</option>
+                    <option value="legal">Legal / Court Related</option>
+                    <option value="others">General / Others</option>
                 </select>
             </div>
 
-            <!-- First Name & Last Name -->
-            <div class="flex gap-4 mb-4">
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                    <input type="text" value="User's First Name"
+            <!-- Specific Purpose -->
+            <div class="mb-4" ng-show="selectedPurpose">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Specify Purpose</label>
+                <select class="dropdown-label" ng-model="specificPurpose">
+                    <option value="">--- Select ---</option>
+                    <option ng-repeat="option in subOptions[selectedPurpose]"
+                            ng-value="option.value">
+                        {{ option.label }}
+                    </option>
+                </select>
+            </div>
+
+            <!-- Specific Purpose -->
+            <div class="mb-4" ng-show="specificPurpose === 'other_not_specified'">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Please specify</label>
+                <input type="text" ng-model="otherPurposeText"
+                       placeholder="Please describe your purpose..."
+                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <!--Qty of request document-->
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Number of copies</label>
+                <p class="text-xs text-gray-500 mb-2">Select how many copies you need (max 7)</p>
+
+                <div class="flex items-center">
+                    <button type="button" ng-click="changeQty(-1)" ng-disabled="qty === 1"
+                            class="w-9 h-9 border border-gray-300 rounded-l-lg bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center text-lg">
+                        −
+                    </button>
+                    <input type="number" ng-model="qty" readonly
+                           class="w-14 h-9 border-t border-b border-gray-300 text-center text-sm font-medium text-gray-900 bg-white focus:outline-none
+                           [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+                    <button type="button" ng-click="changeQty(1)" ng-disabled="qty === 7"
+                            class="w-9 h-9 border border-gray-300 rounded-r-lg bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center text-lg">
+                        +
+                    </button>
+                    <span class="ml-3 text-sm text-gray-500">
+                        {{ qty === 1 ? '1 copy' : qty + ' copies' }}
+                    </span>
+                </div>
+
+                <!-- First Name & Last Name -->
+                <div class="flex gap-4 mb-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        <input type="text" value="User's First Name"
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" value="User's Last Name"
+                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <input type="text" value="123 Play ground street gracepark caloocan city"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                 </div>
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                    <input type="text" value="User's Last Name"
+
+                <!-- Contact -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact</label>
+                    <input type="text" value="09296814595"
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                 </div>
-            </div>
+                <!-- Note -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-6 text-sm text-blue-700">
+                    <span class="font-semibold">Note:</span> Processing time is typically 3 business days. You will receive a notification once your document is ready for pickup.
+                </div>
 
-            <!-- Address -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                <input type="text" value="123 Play ground street gracepark caloocan city"
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
-            </div>
+                <!-- Buttons -->
+                <div class="flex gap-4 pt-4 border-t border-gray-200">
+                    <button class="flex-1 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button class="flex-1 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                        Submit Request
+                    </button>
+                </div>
 
-            <!-- Contact -->
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Contact</label>
-                <input type="text" value="09296814595"
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
             </div>
-            <!-- Note -->
-            <div class="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 mb-6 text-sm text-blue-700">
-                <span class="font-semibold">Note:</span> Processing time is typically 3 business days. You will receive a notification once your document is ready for pickup.
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex gap-4 pt-4 border-t border-gray-200">
-                <button class="flex-1 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Cancel
-                </button>
-                <button class="flex-1 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
-                    Submit Request
-                </button>
-            </div>
-
         </div>
-
     </main>
 </div>
 
