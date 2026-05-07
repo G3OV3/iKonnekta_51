@@ -42,7 +42,7 @@
                 break;
 
             // Staff Pages
-            case 'staffDashboard':
+            case 'StaffDashboard':
                 window.location.href = "/VStaff/VDashboardViewPage"
                 break;
             case 'AddResident':
@@ -57,17 +57,21 @@
             case 'ManageRequests':
                 window.location.href = "/VStaff/VManageRequestViewPage"
                 break;
-            case 'staffNotification':
+            case 'StaffNotification':
                 window.location.href = "/VStaff/VNotificationViewPage"
                 break;
             case 'AccsOfResidents':
                 window.location.href = "/VStaff/VRegisteredResidentsViewPage"
                 break;
-            case 'requestHistoryRecords':
+            case 'RequestHistoryRecords':
                 window.location.href = "/VStaff/VRequestHistory_RecordsViewPage"
                 break;
-            case 'editResidentInfo':
+            case 'EditResidentInfo':
                 window.location.href = "/VStaff/VViewEditResidentInfoViewPage"
+                break;
+            case 'ViewRequestOfDetails':
+                window.location.href = "/VStaff/VViewRequestDetailsViewPage"
+                break;
         }
     }
     // OTP Part
@@ -154,6 +158,24 @@
         }
     });
 
+   
+
+    //checking if it the user input has at sign
+    $scope.warningMessage = "";
+    $scope.inputEmail = "";
+
+    $scope.checkAtSign = function () {
+        var input = $scope.inputEmail;
+        var emailPattern = /^[^\s@]+@[^\s@]+\.com$/;
+
+        if (!input || input.trim() === '') {
+            $scope.warningMessage = "";
+        } else if (!emailPattern.test(input)) {
+            $scope.warningMessage = "must include @ and .com";
+        } else {
+            $scope.warningMessage = "";
+        }
+    };
 
     // Resident Part
 
@@ -233,6 +255,8 @@
     $scope.markAllRead = function () {
         $scope.allNotifications.forEach(function (n) { n.read = true; });
     };
+
+    //Staff Pages
 
 
 
