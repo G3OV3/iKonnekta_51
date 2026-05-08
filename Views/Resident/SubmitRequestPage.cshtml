@@ -23,7 +23,7 @@
 
             <!-- Document Type -->
             <div class="mb-4">
-                <label class="dropDown">Document Type</label>
+                <label class="dropDown">Document Type <span class="text-red-400">*</span></label>
                 <select class="dropdown-label" ng-model="selectedDocument" ng-change="resetSpecific()">
                     <option value="">Select Document</option>
                     <option value="barangayClearance">Barangay Clearance</option>
@@ -37,7 +37,7 @@
 
             <!-- Purpose -->
             <div class="mb-4">
-                <label class="dropDown">Purpose</label>
+                <label class="dropDown">Purpose <span class="text-red-400">*</span></label>
                 <select class="dropdown-label" ng-model="selectedPurpose">
                     <option value="">---</option>
                     <option ng-repeat="option in options[selectedDocument]"
@@ -46,26 +46,6 @@
                     </option>
                 </select>
             </div>
-
-            <!-- Specific Purpose -->
-            <!--<div class="mb-4" ng-show="selectedPurpose">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Specify Purpose</label>
-                <select class="dropdown-label" ng-model="specificPurpose">
-                    <option value="">--- Select ---</option>
-                    <option ng-repeat="option in subOptions[selectedPurpose]"
-                            ng-value="option.value">
-                        {{ option.label }}
-                    </option>
-                </select>
-            </div>-->
-
-            <!-- Specific Purpose -->
-            <!--<div class="mb-4" ng-show="specificPurpose === 'other_not_specified'">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Please specify</label>
-                <input type="text" ng-model="otherPurposeText"
-                       placeholder="Please describe your purpose..."
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>-->
 
             <!--Qty of request document-->
             <div class="mb-4">
@@ -93,12 +73,12 @@
                 <div class="flex gap-4 mb-4">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                        <input type="text" value="User's First Name"
+                        <input type="text" readonly
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                     </div>
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                        <input type="text" value="User's Last Name"
+                        <input type="text" readonly
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                     </div>
                 </div>
@@ -106,14 +86,14 @@
                 <!-- Address -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                    <input type="text" value="123 Play ground street gracepark caloocan city"
+                    <input type="text" readonly
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                 </div>
 
                 <!-- Contact -->
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Contact</label>
-                    <input type="text" value="09296814595"
+                    <input type="text" readonly
                            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" readonly />
                 </div>
                 <!-- Note -->
@@ -123,10 +103,10 @@
 
                 <!-- Buttons -->
                 <div class="flex gap-4 pt-4 border-t border-gray-200">
-                    <button class="flex-1 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer">
+                    <button class="flex-1 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer" ng-click="navigate('residentDashboard')">
                         Cancel
                     </button>
-                    <button class="flex-1 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 cursor-pointer">
+                    <button class="flex-1 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 cursor-pointer" ng-click="isPurposeAndDocSelected()">
                         Submit Request
                     </button>
                 </div>

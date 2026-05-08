@@ -17,7 +17,7 @@
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-4">
                         <div>
-                            <h2 class="text-lg font-bold text-slate-900">Juan Dela Cruz</h2>
+                            <h2 class="text-lg font-bold text-slate-900">{{}}</h2>
                             <p class="text-sm text-slate-500">Resident Account</p>
                         </div>
                     </div>
@@ -42,19 +42,19 @@
                             </svg>
                             <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">Full Name</span>
                         </div>
-                        <p class="text-sm font-semibold text-slate-800">Juan Dela Cruz</p>
+                        <p class="text-sm font-semibold text-slate-800">{{}}</p>
                         <p class="text-xs text-slate-400 mt-0.5">Cannot be changed</p>
                     </div>
 
-                    <!-- RBI ID -->
+                    <!-- PhilSys ID -->
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
                             </svg>
-                            <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">RBI ID</span>
+                            <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">PhySys</span>
                         </div>
-                        <p class="text-sm font-semibold text-slate-800">RBI-2024-001</p>
+                        <p class="text-sm font-semibold text-slate-800">{{}}</p>
                         <p class="text-xs text-slate-400 mt-0.5">Cannot be changed</p>
                     </div>
 
@@ -66,7 +66,7 @@
                             </svg>
                             <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">Birth Date</span>
                         </div>
-                        <p class="text-sm font-semibold text-slate-800">May 15, 1990</p>
+                        <p class="text-sm font-semibold text-slate-800">{{}}</p>
                         <p class="text-xs text-slate-400 mt-0.5">Cannot be changed</p>
                     </div>
 
@@ -78,7 +78,7 @@
                             </svg>
                             <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">Mobile Number</span>
                         </div>
-                        <p class="text-sm font-semibold text-slate-800">09171234567</p>
+                        <p class="text-sm font-semibold text-slate-800">{{}}</p>
                     </div>
                     <!-- Address -->
                     <div>
@@ -89,7 +89,7 @@
                             </svg>
                             <span class="text-xs font-medium text-slate-400 uppercase tracking-wide">Address</span>
                         </div>
-                        <p class="text-sm font-semibold text-slate-800">123 Main St, Barangay 52</p>
+                        <p class="text-sm font-semibold text-slate-800">{{}}</p>
                         <p class="text-xs text-slate-400 mt-0.5">Cannot be changed</p>
                     </div>
                     <!--email address -->
@@ -105,7 +105,7 @@
                             </span>
                         </div>
                         <p class="text-sm font-semibold text-slate-800">
-                            j.delacruz@gmail.com
+                            {{}}
                         </p>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                 <h2 class="text-xl font-semibold text-gray-900 mb-1">Edit Your Profile</h2>
                 <div class="flex flex-col gap-3">
                     <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Mobile Number *</label>
+                        <label class="text-xs font-medium text-gray-500 uppercase tracking-wide">Mobile Number </label>
                         <input type="text"
                                ng-model="num"
                                inputmode="numeric"
@@ -137,7 +137,7 @@
 
                     <div class="flex justify-end gap-2 mt-2">
                         <button class="bg-gray-400 hover:bg-gray-700 transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"
-                                ng-click="cancelUpdeteProfileFunc()">
+                                ng-click="navigate('residentDashboard')">
                             Cancel
                         </button>
                         <button class="bg-blue-600 hover:bg-blue-700 transition-colors text-white text-sm font-medium px-5 py-2.5 rounded-lg cursor-pointer"

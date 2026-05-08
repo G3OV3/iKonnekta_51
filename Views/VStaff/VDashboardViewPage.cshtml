@@ -109,36 +109,68 @@
             <div class="card2">
                 <h2 class="text-base font-bold mb-3">Recent Requests</h2>
                 <hr class="border-gray-200 mb-4">
-                <div class="bg-white transition-all">
+
+                <!-- EMPTY STATE -->
+                <div ng-if="!recentRequests || recentRequests.length === 0">
+                    <p class="text-xs text-gray-400">No requests found.</p>
+                </div>
+
+                <!-- LIST -->
+                <div class="bg-white transition-all mb-2"
+                     ng-repeat="req in recentRequests track by req.id">
+
+                    <!-- Header -->
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
-                            <h3 class="text-[15px] font-semibold text-gray-800">Barangay Clearance</h3>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#DBEAFE] text-[#2563EB]">
-                                Processing
+                            <h3 class="text-[15px] font-semibold text-gray-800">
+                                {{ req.document }}
+                            </h3>
+
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-medium"
+                                  ng-class="{
+                        'bg-[#DBEAFE] text-[#2563EB]': req.status === 'Processing',
+                        'bg-green-100 text-green-700': req.status === 'Approved',
+                        'bg-yellow-100 text-yellow-700': req.status === 'Pending'
+                      }">
+                                {{ req.status }}
                             </span>
                         </div>
-                        <div class="text-red-500 text-[12px] font-medium">High Priority</div>
+
+                        <div class="text-[12px] font-medium"
+                             ng-class="{
+                    'text-red-500': req.priority === 'High Priority',
+                    'text-yellow-500': req.priority === 'Medium Priority',
+                    'text-green-500': req.priority === 'Low Priority'
+                     }">
+                            {{ req.priority }}
+                        </div>
                     </div>
+
+                    <!-- Body -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
                             <p class="text-[12px] text-gray-500 mb-1">Request ID</p>
-                            <p class="text-[13px] font-bold text-gray-900">REQ-001</p>
+                            <p class="text-[13px] font-bold text-gray-900">{{ req.id }}</p>
                         </div>
+
                         <div>
                             <p class="text-[12px] text-gray-500 mb-1">Resident</p>
-                            <p class="text-[13px] font-bold text-gray-900">Juan Dela Cruz</p>
+                            <p class="text-[13px] font-bold text-gray-900">{{ req.resident }}</p>
                         </div>
+
                         <div>
                             <p class="text-[12px] text-gray-500 mb-1">Purpose</p>
-                            <p class="text-[13px] font-bold text-gray-900">Employment</p>
+                            <p class="text-[13px] font-bold text-gray-900">{{ req.purpose }}</p>
                         </div>
+
                         <div>
                             <p class="text-[12px] text-gray-500 mb-1">Date Requested</p>
-                            <p class="text-[13px] font-bold text-gray-900">04/26/2026</p>
+                            <p class="text-[13px] font-bold text-gray-900">{{ req.dateRequested }}</p>
                         </div>
                     </div>
+
+                    <hr class="my-4 border-gray-100">
                 </div>
             </div>
-        </div>
     </div>
 </main>

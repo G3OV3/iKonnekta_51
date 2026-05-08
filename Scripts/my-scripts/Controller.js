@@ -181,15 +181,15 @@
 
     //TrackRequests
     $scope.requests = [
-        {
-            documentType: "Barangay Clearance",
-            requestId: "REQ-001",
-            status: "Processing",
-            purpose: "Employment",
-            submittedDate: "April 30, 2026",
-            contact: "09171234567",
-            estimatedCompletion: "April 30, 2026"
-        }
+        //{
+        //    documentType: "Barangay Clearance",
+        //    requestId: "REQ-001",
+        //    status: "Processing",
+        //    purpose: "Employment",
+        //    submittedDate: "April 30, 2026",
+        //    contact: "09171234567",
+        //    estimatedCompletion: "April 30, 2026"
+        //}
     ];
 
     $scope.cancelRequest = function (request) {
@@ -261,48 +261,48 @@
     //
 
     //Notification 
-    $scope.currentTab = 'all';
-    $scope.allNotifications = [
-        {
-            id: 1, icon: '📄',
-            title: 'Barangay Clearance',
-            sub: 'Your Certification for barangary clearance is processing.',
-            time: 'Just now', read: false,
-        },
-    ];
+        $scope.currentTab = 'all';
+        $scope.allNotifications = [
+            //{
+            //    id: 1, icon: '📄',
+            //    title: 'Barangay Clearance',
+            //    sub: 'Your Certification for barangary clearance is processing.',
+            //    time: 'Just now', read: false,
+            //},
+        ];
 
-    $scope.setTab = function (tab) {
-        $scope.currentTab = tab;
-    };
+        $scope.setTab = function (tab) {
+            $scope.currentTab = tab;
+        };
 
-    $scope.unreadNotifications = function () {
-        return $scope.allNotifications.filter(function (n) { return !n.read; });
-    };
+        $scope.unreadNotifications = function () {
+            return $scope.allNotifications.filter(function (n) { return !n.read; });
+        };
 
-    $scope.unreadCount = function () {
-        return $scope.allNotifications.filter(function (n) { return !n.read; }).length;
-    };
+        $scope.unreadCount = function () {
+            return $scope.allNotifications.filter(function (n) { return !n.read; }).length;
+        };
 
-    $scope.toggleRead = function (n) {
-        n.read = !n.read;
-    };
+        $scope.toggleRead = function (n) {
+            n.read = !n.read;
+        };
 
-    $scope.markAllRead = function () {
-        $scope.allNotifications.forEach(function (n) { n.read = true; });
-    };
+        $scope.markAllRead = function () {
+            $scope.allNotifications.forEach(function (n) { n.read = true; });
+        };
 
-    //Submit Document Request
+        //Submit Document Request
 
-    $scope.qty = 1;
-    $scope.needMoreCopies = false;
-
-    $scope.changeQty = function (delta) {
-        var val = $scope.qty + delta;
-        $scope.qty = Math.max(1, Math.min(10, val));
-    };
-
-    $scope.resetQty = function () {
         $scope.qty = 1;
+        $scope.needMoreCopies = false;
+
+        $scope.changeQty = function (delta) {
+            var val = $scope.qty + delta;
+            $scope.qty = Math.max(1, Math.min(10, val));
+        };
+
+        $scope.resetQty = function () {
+            $scope.qty = 1;
     };
 
     // Purpose
@@ -359,8 +359,44 @@
         
         ]
     };
+
+    $scope.isPurposeAndDocSelected = function () {
+        if ($scope.selectedDocument === '' && $scope.selectedPurpose === '') {
+            Swal.fire({
+                icon: 'error',
+                text: 'Must fill the dropdown'
+            })
+        }
+        else {
+            Swal.fire({
+                icon: 'success',
+                text: 'Your request is on process '
+            })
+        }
+    }
+
+
     //Staff Pages
 
-
+    $scope.recentRequests = [
+        //{
+        //    id: "REQ-001",
+        //    document: "Barangay Clearance",
+        //    status: "Processing",
+        //    priority: "High Priority",
+        //    resident: "Juan Dela Cruz",
+        //    purpose: "Employment",
+        //    dateRequested: "04/26/2026"
+        //},
+        //{
+        //    id: "REQ-002",
+        //    document: "Certificate of Residency",
+        //    status: "Approved",
+        //    priority: "Normal Priority",
+        //    resident: "Maria Santos",
+        //    purpose: "Scholarship",
+        //    dateRequested: "04/25/2026"
+        //}
+    ];
 
 });
