@@ -153,6 +153,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Context\IKONNEKTA51Context.cs" />
+    <Compile Include="Models\errorHandlerClass.cs" />
     <Compile Include="Models\Maps\tbl_AI_Forecasts_Map .cs" />
     <Compile Include="Models\Maps\tbl_Document_Requests_Map.cs" />
     <Compile Include="Models\Maps\tbl_Document_Request_Status_Map.cs" />
