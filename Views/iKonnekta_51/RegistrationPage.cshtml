@@ -12,7 +12,8 @@
 
             <div>
                 <label class="text-base sm:text-lg block mb-2 text-[#364153]">PhySys Card No</label>
-                <input type="text" placeholder="2024-XXXX-XXXX-XXXX"
+                <input type="text" placeholder="2024-XXXX-XXXX-XXXX"  ng-model="cardNo" inputmode="numeric"
+                        maxlength="11"
                        class="w-full border border-gray-400 p-2 rounded-xl text-sm sm:text-base" />
             </div>
 
@@ -72,7 +73,7 @@
                 </div>
             </div>
 
-            <button class="btn text-white" ng-click="showTFAFunc()">Click to receive the OTP</button>
+            <button class="btn text-white" ng-click="">Register</button>
 
             <div class="flex justify-center">
                 <p class="text-base sm:text-lg text-[#364153] text-center">

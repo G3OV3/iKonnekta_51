@@ -148,17 +148,17 @@
     }
 
     //Prevent Letters for to input in textbox for num
-    $scope.$watch('num', function (newVal, oldVal) {
-        if (!newVal) return;
+    var numericFields = ['digit', 'phone', 'cardNo'];
 
-        var clean = newVal.replace(/[^0-9]/g, '');
-
-        if (clean !== newVal) {
-            $scope.phone = clean;
-        }
+    numericFields.forEach(function (field) {
+        $scope.$watch(field, function (newVal) {
+            if (!newVal) return;
+            var clean = newVal.replace(/[^0-9]/g, '');
+            if (clean !== newVal) {
+                $scope[field] = clean;
+            }
+        });
     });
-
-   
 
     //checking if it the user input has at sign
     $scope.warningMessage = "";
@@ -193,6 +193,7 @@
     ];
 
     $scope.cancelRequest = function (request) {
+<<<<<<< HEAD
         Swal.fire({
             title: "Cancel Request?",
             text: "Are you sure you want to cancel this request?",
@@ -205,6 +206,30 @@
                 request.status = "Cancelled";
             }
         });
+=======
+         Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to cancel this request?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                request.status = 'Cancelled';
+                $scope.$apply(); // Required to update AngularJS binding
+
+                Swal.fire({
+                    title: 'Cancelled!',
+                    text: 'The request has been cancelled.',
+                    icon: 'success'
+                });
+            }
+        });
+
+>>>>>>> Latest update in frontend
     };
 
     //Resident Profile
@@ -221,11 +246,19 @@
     }
 
     $scope.saveChangesProfileFunc = function () {
-        Swal.fire({
-            icon: 'success',
-            text: 'Profile updated successfully'
-        });
+        //Swal.fire({
+        //    icon: 'success',
+        //    text: 'Profile updated successfully'
+        //});
+        if ($scope.phone === "" || $scope.inputEmail === "") {
+            Swal.fire({
+                icon: 'error',
+                text: 'Empty fields'
+            });
+        }
     }
+
+
 
     //Notification 
     $scope.currentTab = 'all';
@@ -328,86 +361,6 @@
         
         ]
     };
-
-    //$scope.subOptions = {
-    //    education: [
-    //        { value: 'enrollment', label: 'Enrollment' },
-    //        { value: 'scholarship_application', label: 'Scholarship Application' },
-    //        { value: 'transfer_of_school', label: 'Transfer of School' },
-    //        { value: 'graduation_requirement', label: 'Graduation Requirement' },
-    //        { value: 'school_requirement', label: 'School Requirement (General)' }
-    //    ],
-    //    employment: [
-    //        { value: 'job_application', label: 'Job Application' },
-    //        { value: 'pre_employment', label: 'Pre-Employment Requirement' },
-    //        { value: 'ojt_internship', label: 'OJT / Internship Requirement' },
-    //        { value: 'contract_requirement', label: 'Contract Requirement' }
-    //    ],
-    //    medical: [
-    //        { value: 'hospital_admission', label: 'Hospital Admission Requirement' },
-    //        { value: 'medical_assistance', label: 'Medical Assistance' },
-    //        { value: 'philhealth', label: 'PhilHealth Requirement' },
-    //        { value: 'emergency_medical', label: 'Emergency Medical Support' }
-    //    ],
-    //    financial_assistance: [
-    //        { value: 'financial_aid', label: 'Financial Aid Application' },
-    //        { value: 'scholarship_financial', label: 'Scholarship Financial Support' },
-    //        { value: 'loan_application', label: 'Loan Application' },
-    //        { value: 'charity_assistance', label: 'Charity Assistance' }
-    //    ],
-    //    banking: [
-    //        { value: 'bank_account_opening', label: 'Bank Account Opening' },
-    //        { value: 'credit_loan_processing', label: 'Credit / Loan Processing' },
-    //        { value: 'verification_requirement', label: 'Verification Requirement' }
-    //    ],
-    //    government: [
-    //        { value: 'passport_application', label: 'Passport Application' },
-    //        { value: 'nbi_police_clearance', label: 'NBI / Police Clearance Requirement' },
-    //        { value: 'sss_gsis_pagibig', label: 'SSS / GSIS / PAG-IBIG Requirement' },
-    //        { value: 'voter_registration', label: 'Voter Registration' },
-    //        { value: 'government_transaction', label: 'Government Transaction Support' }
-    //    ],
-    //    residency: [
-    //        { value: 'proof_of_residency', label: 'Proof of Residency' },
-    //        { value: 'address_verification', label: 'Address Verification' },
-    //        { value: 'barangay_certification', label: 'Barangay Certification' },
-    //        { value: 'id_application', label: 'ID Application' },
-    //        { value: 'transfer_of_residence', label: 'Transfer of Residence' }
-    //    ],
-    //    business: [
-    //        { value: 'business_permit', label: 'Business Permit Application' },
-    //        { value: 'dti_registration', label: 'DTI Registration Requirement' },
-    //        { value: 'market_vendor_permit', label: 'Market Vendor Permit' },
-    //        { value: 'small_business_support', label: 'Small Business Support' }
-    //    ],
-    //    social_welfare: [
-    //        { value: 'solo_parent', label: 'Solo Parent Application' },
-    //        { value: 'senior_citizen', label: 'Senior Citizen Benefits' },
-    //        { value: 'pwd_assistance', label: 'PWD Assistance' },
-    //        { value: '4ps_dswd', label: '4Ps / DSWD Programs' }
-    //    ],
-    //    housing: [
-    //        { value: 'housing_application', label: 'Housing Application' },
-    //        { value: 'relocation_assistance', label: 'Relocation Assistance' },
-    //        { value: 'utility_connection', label: 'Utility Connection (Water/Electricity/Internet)' }
-    //    ],
-    //    travel: [
-    //        { value: 'travel_requirement', label: 'Travel Requirement' },
-    //        { value: 'personal_identification', label: 'Personal Identification Support' },
-    //        { value: 'character_reference', label: 'Character Reference' }
-    //    ],
-    //    legal: [
-    //        { value: 'court_requirement', label: 'Court Requirement' },
-    //        { value: 'affidavit_support', label: 'Affidavit Support' },
-    //        { value: 'legal_verification', label: 'Legal Verification' },
-    //        { value: 'police_documentation', label: 'Police-Related Documentation' }
-    //    ],
-    //    others: [
-    //        { value: 'barangay_clearance_general', label: 'Barangay Clearance (General Purpose)' },
-    //        { value: 'other_not_specified', label: 'Other / Not Specified' },
-    //    ]
-    //};
-
     //Staff Pages
 
 
