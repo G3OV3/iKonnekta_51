@@ -193,9 +193,18 @@
     ];
 
     $scope.cancelRequest = function (request) {
-        if (confirm("Are you sure you want to cancel this request?")) {
-            request.status = "Cancelled";
-        }
+        Swal.fire({
+            title: "Cancel Request?",
+            text: "Are you sure you want to cancel this request?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it",
+            cancelButtonText: "No, keep it"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                request.status = "Cancelled";
+            }
+        });
     };
 
     //Resident Profile
