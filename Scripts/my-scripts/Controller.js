@@ -414,19 +414,4 @@
             }
         });
     }
-
-    // Manage request
-    $scope.manageReqsArr = [];
-
-    //Req and History
-    $scope.reqAndHistoryArr = [];
-
-    //Reg Acc
-    $scope.residentAccsArr = [];
-
-    //Archieve
-    $scope.residentArchieveArr = [];
-
-    //List of residents
-    $scope.listOfResidentArr = [];
 });
