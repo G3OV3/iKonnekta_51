@@ -152,6 +152,34 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Context\IKONNEKTA51Context.cs" />
+    <Compile Include="Models\Tables\tbl_ai_forecasts_model.cs" />
+    <Compile Include="Models\Tables\tbl_document_requests_model.cs" />
+    <Compile Include="Models\Tables\tbl_document_request_status_model.cs" />
+    <Compile Include="Models\Tables\tbl_document_templates_model.cs" />
+    <Compile Include="Models\Tables\tbl_document_types_model.cs" />
+    <Compile Include="Models\Tables\tbl_error_logs_model.cs" />
+    <Compile Include="Models\Tables\tbl_notification_model.cs" />
+    <Compile Include="Models\Tables\tbl_otp_model.cs" />
+    <Compile Include="Models\Tables\tbl_otp_status_model.cs" />
+    <Compile Include="Models\Tables\tbl_otp_types_model.cs" />
+    <Compile Include="Models\Tables\tbl_priority_levels_model.cs" />
+    <Compile Include="Models\Tables\tbl_request_purposes_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_birth_details_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_citizenships_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_civil_status_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_details_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_educational_attainment_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_fullname_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_gender_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_occupation_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_religion_model.cs" />
+    <Compile Include="Models\Tables\tbl_resident_status_model.cs" />
+    <Compile Include="Models\Tables\tbl_system_logs_model.cs" />
+    <Compile Include="Models\Tables\tbl_user_account_status_model.cs" />
+    <Compile Include="Models\Tables\tbl_user_model.cs" />
+    <Compile Include="Models\Tables\tbl_user_roles_model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1005,7 +1033,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\Maps\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
