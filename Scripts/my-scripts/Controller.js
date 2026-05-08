@@ -258,12 +258,10 @@
         }
     }
 
-
+    //
 
     //Notification 
     $scope.currentTab = 'all';
-
-
     $scope.allNotifications = [
         {
             id: 1, icon: '📄',
