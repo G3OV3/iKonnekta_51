@@ -8,14 +8,14 @@
         <div class="flex flex-col gap-6 mb-2">
             <div>
                 <label class="text-base sm:text-lg block mb-2 text-[#364153]">Username</label>
-                <input type="text" placeholder=""
+                <input type="text" placeholder="" maxlength="15"
                        class="w-full border border-gray-400 p-2 rounded-xl" />
             </div>
 
             <div>
                 <label class="text-base sm:text-lg block mb-2 text-[#364153]">Password</label>
                 <div class="relative mb-4">
-                    <input ng-attr-type="{{ showPassword ? 'text' : 'password' }}" placeholder=""
+                    <input ng-attr-type="{{ showPassword ? 'text' : 'password' }}" placeholder="" maxlength="16"
                            class="w-full border border-gray-400 p-2 pr-10 rounded-xl" />
                     <button type="button" ng-click="showPassword = !showPassword"
                             class="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700">
@@ -35,7 +35,7 @@
                         </svg>
                     </button>
                 </div>
-                <button class="btn text-white w-full mb-4" ng-click="showTFAFunc()">Sign In</button>
+                <button class="btn text-white w-full mb-4" ng-click="">Sign In</button>
 
                 <div class="flex justify-between mb-4">
                     <div class="flex items-center gap-2 ml-2">
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-     <div class="card" ng-show="showTFA">
+     @*<div class="card" ng-show="showTFA">
          <h1 class="text-2xl font-bold text-center p-2">iKonnekta-51</h1>
          <p class="text-[#4A5565] text-center mb-[10px]">Two-factor authentication</p>
          <div class="flex flex-col gap-6 mb-2">
@@ -83,7 +83,9 @@
 
              <button class="btn text-white" ng-click="verifyOTP()">Confirm OTP</button>
 
+             <p class="text-[#364153] text-center ">Didn't receive a code?'<a href="#" class="text-blue-400"> Resend </a>00:00<p>
+
          </div>
        
-        </div>
+        </div>*@
 </div>

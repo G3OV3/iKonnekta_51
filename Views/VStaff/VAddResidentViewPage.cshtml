@@ -14,13 +14,17 @@
                 <!-- Row 1 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">PhySys Card No.</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1" 
+                                ng-model="num"
+                                inputmode="numeric"
+                                maxlength="11">
+                              PhySys Card No.</label>
                         <input type="text"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name Name</label>
-                        <input type="text"
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        <input type="text" maxlength="15"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
@@ -29,17 +33,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                     <div class="md:col-span-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                        <input type="text"
+                        <input type="text" maxlength="15"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div class="md:col-span-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Suffix</label>
-                        <input type="text"
+                        <input type="text" maxlength="10"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div class="md:col-span-4">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
-                        <input type="text"
+                        <input type="text"  maxlength="15"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
@@ -91,7 +95,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                        <input type="text"
+                        <input type="text" maxlength="50"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
@@ -111,7 +115,7 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
                         <input type="text"
-                                ng-model="phone"
+                                ng-model="num"
                                 inputmode="numeric"
                                 maxlength="11"
                                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-500 bg-white-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />

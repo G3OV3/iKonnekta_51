@@ -147,8 +147,8 @@
         $scope.sidebarOpen = false
     }
 
-    //Prevent Letters for phone textbox
-    $scope.$watch('phone', function (newVal, oldVal) {
+    //Prevent Letters for to input in textbox for num
+    $scope.$watch('num', function (newVal, oldVal) {
         if (!newVal) return;
 
         var clean = newVal.replace(/[^0-9]/g, '');
@@ -225,8 +225,8 @@
     $scope.allNotifications = [
         {
             id: 1, icon: '📄',
-            title: 'Document request approved',
-            sub: 'Your Certification of proof of Residency is processing.',
+            title: 'Barangay Clearance',
+            sub: 'Your Certification for barangary clearance is processing.',
             time: 'Just now', read: false,
         },
     ];
