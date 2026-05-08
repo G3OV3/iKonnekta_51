@@ -193,7 +193,7 @@
     ];
 
     $scope.cancelRequest = function (request) {
-<<<<<<< HEAD
+
         Swal.fire({
             title: "Cancel Request?",
             text: "Are you sure you want to cancel this request?",
@@ -206,7 +206,7 @@
                 request.status = "Cancelled";
             }
         });
-=======
+
          Swal.fire({
             title: 'Are you sure?',
             text: 'Do you want to cancel this request?',
@@ -229,7 +229,7 @@
             }
         });
 
->>>>>>> Latest update in frontend
+
     };
 
     //Resident Profile
