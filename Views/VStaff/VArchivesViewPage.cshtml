@@ -48,7 +48,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-gray-50 transition-colors">
+
+                        <tr ng-if="!residentArchieveArr || residentArchieveArr.length === 0">
+                            <td colspan="9" class="text-center py-6 text-gray-400 mt-2">
+                                No requests found.
+                            </td>
+                        </tr>
+
+                        <tr ng-repeat="resAcc in residentArchieveArr" class="hover:bg-gray-50 transition-colors">
                             <td class="font-semibold text-gray-900 px-4 py-4">1234-5678-9012-3456</td>
                             <td class="font-semibold text-gray-900 px-4 py-4">Dela Cruz</td>
                             <td class="text-[#2D3748] font-medium px-4 py-4 ">Juan</td>

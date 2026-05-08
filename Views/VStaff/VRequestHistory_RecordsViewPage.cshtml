@@ -47,7 +47,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-gray-50 transition-colors">
+
+                        <tr ng-if="!reqAndHistoryArr || reqAndHistoryArr.length === 0">
+                            <td colspan="9" class="text-center py-6 text-gray-400 mt-2">
+                                No history requests found.
+                            </td>
+                        </tr>
+
+                        <tr class="hover:bg-gray-50 transition-colors" ng-repeat="req in reqAndHistoryArr">
                             <td class="font-semibold text-gray-900 px-4 py-4">REQ-001</td>
                             <td class="font-semibold text-gray-900  px-4 py-4"> Juan Dela Cruz</td>
                             <td class="text-[#2D3748]  px-4 py-4"> 09664524621</td>

@@ -398,20 +398,5 @@
         //    dateRequested: "04/25/2026"
         //}
     ];
-    // Authentication
-    $scope.registerUser = function () {
-        var userInfo = {
-            PhySysCardNo: $scope.cardNo,
-            Username: $scope.Username,
-            Password: $scope.Password
-        }
-        var Service = iKonnekta_51_Service.registerUserService(userInfo);
-        Service.then(function (response) {
-            if (response.data.success) {
-                Swal.fire("Notice!!!", "Registration Success");
-            } else {
-                Swal.fire("Notice!!!", "Registration Failed");
-            }
-        });
-    }
+
 });
