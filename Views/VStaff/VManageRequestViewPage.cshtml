@@ -49,15 +49,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="font-semibold text-gray-900 px-4 py-4">REQ-001</td>
-                            <td class="font-semibold text-gray-900  px-4 py-4"> Juan Dela Cruz</td>
-                            <td class="text-[#2D3748]  px-4 py-4"> 09664524621</td>
-                            <td class="text-[#2D3748]  px-4 py-4">Barangay Clearance</td>
-                            <td class="text-[#2D3748] px-4 py-4 ">Employment</td>
-                            <td class="text-[#2D3748]  px-4 py-4 ">Processing</td>
-                            <td class="text-[#2D3748]  px-4 py-4 ">4/26/2026</td>
-                            <td class="text-[#2D3748]  px-4 py-4 ">High</td>
+                        <tr ng-if="!manageReqsArr || manageReqsArr.length === 0">
+                            <td colspan="9" class="text-center py-6 text-gray-400 mt-2">
+                                No requests found.
+                            </td>
+                        </tr>
+                        <tr ng-repeat="req in manageReqsArr " class="hover:bg-gray-50 transition-colors">
+                            <td class="font-semibold text-gray-900 px-4 py-4">{{req.requestID}}</td>
+                            <td class="font-semibold text-gray-900  px-4 py-4">{{req.resident}}</td>
+                            <td class="text-[#2D3748]  px-4 py-4">{{req.mobileNumber}}</td>
+                            <td class="text-[#2D3748]  px-4 py-4">{{req.documentType}}</td>
+                            <td class="text-[#2D3748] px-4 py-4 ">{{req.purpose}}</td>
+                            <td class="text-[#2D3748]  px-4 py-4 ">{{req.status}}</td>
+                            <td class="text-[#2D3748]  px-4 py-4 ">{{req.dateRequested}}</td>
+                            <td class="text-[#2D3748]  px-4 py-4 ">{{req.priority}}</td>
                             <td>
                                 <button class="btn-view hover:text-blue-400" ng-click="navigate('ViewRequestOfDetails')">View</button>
                             </td>
