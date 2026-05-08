@@ -153,6 +153,33 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Context\IKONNEKTA51Context.cs" />
+    <Compile Include="Models\Maps\tbl_AI_Forecasts_Map .cs" />
+    <Compile Include="Models\Maps\tbl_Document_Requests_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Document_Request_Status_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Document_Templates_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Document_Types_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Error_Logs_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Notifications_Map .cs" />
+    <Compile Include="Models\Maps\tbl_OTP_Map.cs" />
+    <Compile Include="Models\Maps\tbl_OTP_Status_Map.cs" />
+    <Compile Include="Models\Maps\tbl_OTP_Types_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Priority_Levels_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Request_Purposes_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Residents_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Birth_Details_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Citizenships_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Civil_Status_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Details_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Educational_Attainment_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Fullname_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Gender_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Occupation_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Religion_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Resident_Status_Map.cs" />
+    <Compile Include="Models\Maps\tbl_System_Logs_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Users_Map.cs" />
+    <Compile Include="Models\Maps\tbl_User_Account_Status_Map.cs" />
+    <Compile Include="Models\Maps\tbl_User_Roles_Map.cs" />
     <Compile Include="Models\Tables\tbl_ai_forecasts_model.cs" />
     <Compile Include="Models\Tables\tbl_document_requests_model.cs" />
     <Compile Include="Models\Tables\tbl_document_request_status_model.cs" />
@@ -1033,7 +1060,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Maps\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
