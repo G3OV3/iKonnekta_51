@@ -398,22 +398,6 @@
         //    dateRequested: "04/25/2026"
         //}
     ];
-    // Authentication
-    $scope.registerUser = function () {
-        var userInfo = {
-            PhySysCardNo: $scope.cardNo,
-            Username: $scope.Username,
-            Password: $scope.Password
-        }
-        var Service = iKonnekta_51_Service.registerUserService(userInfo);
-        Service.then(function (response) {
-            if (response.data.success) {
-                Swal.fire("Notice!!!", "Registration Success");
-            } else {
-                Swal.fire("Notice!!!", "Registration Failed");
-            }
-        });
-    }
     // Manage request
     $scope.manageReqsArr = [];
 
@@ -428,4 +412,29 @@
 
     //List of residents
     $scope.listOfResidentArr = [];
+    // Authentication
+    $scope.registerUser = function () {
+        var userInfo = {
+            PhySys_Card_No: $scope.cardNo,
+            Username: $scope.Username,
+            Password: $scope.Password
+        }
+        if (!$scope.cardNo || !$scope.Username || !$scope.Password || !$scope.ConfirmPassword) {
+            Swal.fire("Notice!", "Please complete all fields.", "warning");
+            return;
+        }
+
+        if ($scope.Password != $scope.ConfirmPassword) {
+            Swal.fire("Notice!", "Passwords do not match.", "warning");
+            return;
+        }
+        var Service = iKonnekta_51_Service.registerUserService(userInfo);
+        Service.then(function (response) {
+            if (response.data.success) {
+                Swal.fire("Notice!!!", "Registration Success");
+            } else {
+                Swal.fire("Notice!!!", response.data.message);
+            }
+        });
+    }
 });
