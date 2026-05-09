@@ -388,24 +388,7 @@
     //Staff Pages
 
     $scope.recentRequests = [
-        //{
-        //    id: "REQ-001",
-        //    document: "Barangay Clearance",
-        //    status: "Processing",
-        //    priority: "High Priority",
-        //    resident: "Juan Dela Cruz",
-        //    purpose: "Employment",
-        //    dateRequested: "04/26/2026"
-        //},
-        //{
-        //    id: "REQ-002",
-        //    document: "Certificate of Residency",
-        //    status: "Approved",
-        //    priority: "Normal Priority",
-        //    resident: "Maria Santos",
-        //    purpose: "Scholarship",
-        //    dateRequested: "04/25/2026"
-        //}
+
     ];
     // Manage request
     $scope.manageReqsArr = [];
@@ -413,36 +396,31 @@
     //Req and History
     $scope.reqAndHistoryArr = [];
 
+
     //Resident Acc
-    //$scope.residentAccsArr = [];
     $scope.getResidentAccs = function () {
         iKonnekta_51_Service.getResidentAccService()
             .then(function (response) {
-                if (response.data.success) {
-                    $scope.residentsAccs = response.data.data;
-                } else {
-                    console.error("Failed to fetch residents:", response.data.message);
-                }
+                   $scope.residentsAccs = response.data.data;
+ 
             })
     }
 
-    //Archieve
-    $scope.residentArchieveArr = [];
+    //archive
+    $scope.getListOfArchivedResidents = function () {
+        iKonnekta_51_Service.getListOfArchivedResidentsService()
+            .then(function (response) {
+                $scope.archivedResidentsList = response.data.data;
+            });
+    };
 
     //List of residents
-
-    //$scope.listOfResidentArr = [];
     $scope.getListOfResidents = function () {
         iKonnekta_51_Service.getListOfResidentsService()
             .then(function (response) {
-                if (response.data.success) {
-                    $scope.residentsList = response.data.data;
-                } else {
-                    console.error("Failed to fetch residents:", response.data.message);
-                }
-            })
+                $scope.residentsList = response.data.data;
+            });
     };
-
     
 
     // Authentication:
