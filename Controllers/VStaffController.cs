@@ -338,6 +338,77 @@ namespace iKonnekta_51.Controllers
                 return Json(new List<object>(), JsonRequestBehavior.AllowGet);
             }
         }
+        public JsonResult GetManageRequests()
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var data = (
+                        from r in db.tbl_Document_Requests
+
+                        join res in db.tbl_Residents
+                            on r.Resident_ID equals res.Resident_ID into resGroup
+                        from res in resGroup.DefaultIfEmpty()
+
+                        join details in db.tbl_Resident_Details
+                            on res.Resident_Details_ID equals details.Resident_Details_ID into detGroup
+                        from details in detGroup.DefaultIfEmpty()
+
+                        join fullname in db.tbl_Resident_Fullname
+                            on details.Resident_FullName_ID equals fullname.Resident_FullName_ID into nameGroup
+                        from fullname in nameGroup.DefaultIfEmpty()
+
+                        join t in db.tbl_Document_Types
+                            on r.Document_Type_ID equals t.Document_Type_ID into tGroup
+                        from t in tGroup.DefaultIfEmpty()
+
+                        join p in db.tbl_Request_Purposes
+                            on r.Purpose_ID equals p.Purpose_ID into pGroup
+                        from p in pGroup.DefaultIfEmpty()
+
+                        join s in db.tbl_Document_Request_Status
+                            on r.Request_Status_ID equals s.Request_Status_ID into sGroup
+                        from s in sGroup.DefaultIfEmpty()
+
+                        join pg in db.tbl_request_progress
+                            on s.Progress_ID equals pg.Progress_ID into pgGroup
+                        from pg in pgGroup.DefaultIfEmpty()
+
+                        where r.Resident_ID > 0
+
+                        orderby r.Created_At descending
+
+                        select new
+                        {
+                            requestId = r.Document_Request_ID,
+
+                            residentName = fullname.First_Name + " " + fullname.Middle_Name + " " + fullname.Last_Name,
+
+                            mobileNumber = res.Contact_Number,
+
+                            documentType = t.Document_Name,
+                            purpose = p.Purpose_Description,
+                            status = pg.Progress_Description,
+                            dateRequested = r.Created_At,
+                            priority = "Normal"
+                        }
+                    ).ToList();
+
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }

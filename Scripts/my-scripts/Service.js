@@ -100,4 +100,7 @@
     this.getAllRecentRequestsService2 = function () {
         return $http.get("/VStaff/GetAllRecentRequests");
     };
+    this.getManageRequestsService = function () {
+        return $http.get("/VStaff/GetManageRequests");
+    };
 });

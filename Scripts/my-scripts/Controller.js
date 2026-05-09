@@ -661,12 +661,20 @@
         });
     };
     $scope.loadStaffDashboard();
-    // list
+    // recent list
     $scope.recentRequests2 = [];
     $scope.loadRecentRequests2 = function () {
         var Service = iKonnekta_51_Service.getAllRecentRequestsService2();
         Service.then(function (response) {
             $scope.recentRequests2 = response.data;
+        });
+    };
+    // manage list
+    $scope.manageReqsArr = [];
+    $scope.loadManageRequests = function () {
+        var Service = iKonnekta_51_Service.getManageRequestsService();
+        Service.then(function (response) {
+            $scope.manageReqsArr = response.data;
         });
     };
 });
