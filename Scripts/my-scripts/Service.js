@@ -39,6 +39,8 @@
     this.getListOfResidentsService = function () {
         return $http.get("/VStaff/GetListOfResidents")
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
     // submit request
     this.getResidentInfoService = function (residentId) {
 
@@ -85,4 +87,16 @@
             data: { requestId: requestId }
         });
     };
+=======
+>>>>>>> latest
+>>>>>>> format of date in archieve
+=======
+
+    this.getResidentAccService = function () {
+        return $http.get("/VStaff/GetRegisteredAccounts")
+    }
+    this.getListOfArchivedResidentsService = function () {
+        return $http.get("/VStaff/GetListOfArchives")
+    }
+>>>>>>> archive date format problem
 });

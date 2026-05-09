@@ -72,6 +72,7 @@ namespace iKonnekta_51.Controllers
                                                   on details.Resident_FullName_ID equals fullname.Resident_FullName_ID
                                               join status in db.tbl_Resident_Status
                                                   on resident.Resident_Status_ID equals status.Resident_Status_ID
+                                              where resident.Resident_Status_ID !=2  // ← only this line added
                                               select new
                                               {
                                                   resident.Resident_ID,
@@ -151,6 +152,77 @@ namespace iKonnekta_51.Controllers
             }
         }
 
+        public JsonResult markAsArchive(int residentStatusID) 
+        {
+            try 
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var listOfResident = db.tbl_Residents.Find(residentStatusID);
+                    if (listOfResident != null)
+                    {
+                        listOfResident.Resident_Status_ID = 2;
+                        listOfResident.Edited_At = DateTime.Now;
+                        db.SaveChanges();
+                    }
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                  ex.StackTrace,
+                  ex.InnerException?.ToString(),
+                  ex.Message
+              );
+                return Json(new { success = false, message = "An error occurred" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult GetListOfArchives()
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var getListOfResidents = (from resident in db.tbl_Residents
+                                              join details in db.tbl_Resident_Details
+                                                  on resident.Resident_Details_ID equals details.Resident_Details_ID
+                                              join fullname in db.tbl_Resident_Fullname
+                                                  on details.Resident_FullName_ID equals fullname.Resident_FullName_ID
+                                              join status in db.tbl_Resident_Status
+                                                  on resident.Resident_Status_ID equals status.Resident_Status_ID
+                                              where resident.Resident_Status_ID != 1  
+                                              select new
+                                              {
+                                                  resident.Resident_ID,
+                                                  resident.PhySys_Card_No,
+                                                  resident.Contact_Number,
+                                                  resident.Email_Address,
+                                                  resident.Date_Registered,
+                                                  resident.Resident_Details_ID,
+                                                  resident.Resident_Status_ID,
+                                                  resident.Edited_At,
+                                                  fullname.Last_Name,
+                                                  fullname.First_Name,
+                                                  fullname.Middle_Name,
+                                                  fullname.Suffix
+                                              }).ToList();
+
+                    return Json(new { success = true, data = getListOfResidents }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+                return Json(new { success = false, message = "An error occurred" }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }
