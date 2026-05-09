@@ -103,4 +103,7 @@
     this.getManageRequestsService = function () {
         return $http.get("/VStaff/GetManageRequests");
     };
+    this.getRequestDetailsService = function (requestId) {
+        return $http.get("/VStaff/GetRequestDetails?requestId=" + requestId);
+    };
 });

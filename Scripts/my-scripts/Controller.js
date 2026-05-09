@@ -677,4 +677,21 @@
             $scope.manageReqsArr = response.data;
         });
     };
+    // view info about the request
+    $scope.requestDetails = {};
+    $scope.requestId = null;
+    $scope.loadRequestDetails = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        $scope.requestId = urlParams.get("id");
+
+        if (!$scope.requestId) {
+            return
+        };
+
+        var Service = iKonnekta_51_Service.getRequestDetailsService($scope.requestId);
+
+        Service.then(function (response) {
+            $scope.requestDetails = response.data;
+        });
+    };
 });

@@ -3,14 +3,18 @@
 }
 <main class="app-container">
     <div class="main-content">
-        <div>
+        <div ng-init="loadRequestDetails()">
             <div class="flex items-center justify-between mb-8 max-w-4xl mx-auto">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">Process Request</h1>
-                    <p class="text-xs font-bold text-gray-400">Request ID: REQ-001</p>
+                    <p class="text-xs font-bold text-gray-400">
+                        Request ID: {{ requestDetails.requestId }}
+                    </p>
                 </div>
                 <div class="px-4 py-1 rounded-full text-[10px] font-bold bg-[#EBF2FF] text-[#155DFC] uppercase tracking-wider">
-                    Processing
+                    <div>
+                        {{ requestDetails.status }}
+                    </div>
                 </div>
             </div>
             <div class="max-w-4xl mx-auto space-y-4">
@@ -19,15 +23,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
                         <div>
                             <span class="info-label">Full Name</span>
-                            <p class="info-value">Juan Dela Cruz</p>
+                            <p class="info-value">{{ requestDetails.fullName }}</p>
                         </div>
                         <div>
                             <span class="info-label">Contact Number</span>
-                            <p class="info-value">09664524621</p>
+                            <p class="info-value">{{ requestDetails.contactNumber }}</p>
                         </div>
                         <div class="md:col-span-2">
                             <span class="info-label">Address</span>
-                            <p class="info-value">123 Main St, Barangay 52</p>
+                            <p class="info-value">{{ requestDetails.address }}</p>
                         </div>
                     </div>
                 </div>
@@ -36,15 +40,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
                         <div>
                             <span class="info-label">Document Type</span>
-                            <p class="info-value">Barangay Clearance</p>
+                            <p class="info-value">{{ requestDetails.documentType }}</p>
                         </div>
                         <div>
                             <span class="info-label">Purpose</span>
-                            <p class="info-value">Employment</p>
+                            <p class="info-value">{{ requestDetails.purpose }}</p>
                         </div>
                         <div>
                             <span class="info-label">Date Requested</span>
-                            <p class="info-value">April 26, 2026</p>
+                            <p class="info-value">
+                                {{ requestDetails.dateRequested | date:'MMMM dd, yyyy' }}
+                            </p>
                         </div>
                     </div>
                 </div>
