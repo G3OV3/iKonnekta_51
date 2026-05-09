@@ -452,30 +452,53 @@
         });
     }
     // 2. Login
+    // Controller.js
+
+    // 2. Login
     $scope.loginUser = function () {
+
         if (!$scope.User_Username || !$scope.User_Password) {
+
             Swal.fire("Warning", "Please fill in all fields", "warning");
             return;
         }
+
         var userLoginInfo = {
             Username: $scope.User_Username,
             Password: $scope.User_Password
         };
+
         var service = iKonnekta_51_Service.loginUserService(userLoginInfo);
+
         service.then(function (response) {
+
             if (response.data.success) {
+
                 sessionStorage.setItem("user", JSON.stringify({
+
                     userId: response.data.userId,
+                    residentId: response.data.residentId,
                     roleId: response.data.roleId,
-                    username: response.data.username
+                    username: response.data.username,
+
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+
+                    contact: response.data.contact,
+                    address: response.data.address
                 }));
+
                 if (response.data.roleId === 1) {
+
                     window.location.href = "/Resident/DashboardPage";
                 }
                 else if (response.data.roleId === 2) {
+
                     window.location.href = "/VStaff/VDashboardViewPage";
                 }
-            } else {
+            }
+            else {
+
                 Swal.fire("Login Failed", response.data.message, "error");
             }
         });
@@ -525,4 +548,5 @@
             $scope.requests = response.data;
         });
     };
+    // for submiting request
 });

@@ -25,40 +25,97 @@ namespace iKonnekta_51.Controllers
         {
            return View();
         }
+        // iKonnekta_51Controller.cs
+
         public JsonResult loginUser(tbl_user_model userLoginInfo)
         {
             try
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var user = db.tbl_Users.FirstOrDefault(x => x.Username == userLoginInfo.Username);
-                    if (user == null)
+                    var userData = (from u in db.tbl_Users
+
+                                    join r in db.tbl_Residents
+                                    on u.Resident_ID equals r.Resident_ID
+
+                                    join rd in db.tbl_Resident_Details
+                                    on r.Resident_Details_ID equals rd.Resident_Details_ID
+
+                                    join rf in db.tbl_Resident_Fullname
+                                    on rd.Resident_FullName_ID equals rf.Resident_FullName_ID
+
+                                    join rb in db.tbl_Resident_Birth_Details
+                                    on rd.Resident_Birth_ID equals rb.Resident_Birth_ID
+
+                                    where u.Username == userLoginInfo.Username
+
+                                    select new
+                                    {
+                                        User = u,
+                                        Resident = r,
+                                        Fullname = rf,
+                                        Birth = rb
+                                    })
+                                    .FirstOrDefault();
+
+                    if (userData == null)
                     {
-                        return Json(new { success = false, message = "User not found" });
+                        return Json(new
+                        {
+                            success = false,
+                            message = "User not found"
+                        });
                     }
-                    if (user.Account_Status_ID != 1)
+
+                    if (userData.User.Account_Status_ID != 1)
                     {
-                        return Json(new { success = false, message = "Account is inactive" });
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Account is inactive"
+                        });
                     }
-                    bool isPasswordValid = BCrypt.Net.BCrypt.Verify(userLoginInfo.Password, user.Password);
+
+                    bool isPasswordValid = BCrypt.Net.BCrypt.Verify(
+                        userLoginInfo.Password,
+                        userData.User.Password
+                    );
+
                     if (!isPasswordValid)
                     {
-                        return Json(new { success = false, message = "Invalid password" });
+                        return Json(new
+                        {
+                            success = false,
+                            message = "Invalid password"
+                        });
                     }
-                    user.Last_Login = DateTime.Now;
+
+                    userData.User.Last_Login = DateTime.Now;
+
                     db.tbl_System_Logs.Add(new tbl_system_logs_model
                     {
-                        User_ID = user.User_ID,
+                        User_ID = userData.User.User_ID,
                         Logged_In_At = DateTime.Now,
-                        Logged_Out_At = null,
+                        Logged_Out_At = null
                     });
+
                     db.SaveChanges();
+
                     return Json(new
                     {
                         success = true,
-                        roleId = user.Role_ID,
-                        userId = user.User_ID,
-                        username = user.Username
+
+                        roleId = userData.User.Role_ID,
+                        userId = userData.User.User_ID,
+                        residentId = userData.Resident.Resident_ID,
+                        username = userData.User.Username,
+
+                        firstName = userData.Fullname.First_Name,
+                        lastName = userData.Fullname.Last_Name,
+
+                        contact = userData.Resident.Contact_Number,
+
+                        address = userData.Birth.Birth_Place
                     });
                 }
             }
@@ -70,7 +127,11 @@ namespace iKonnekta_51.Controllers
                     ex.Message
                 );
 
-                return Json(new { success = false, message = "An error occurred" });
+                return Json(new
+                {
+                    success = false,
+                    message = "An error occurred"
+                });
             }
         }
         public JsonResult registerUser(RegisterViewModel userInfo)

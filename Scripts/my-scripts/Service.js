@@ -37,6 +37,6 @@
         });
     };
     this.getListOfResidentsService = function () {
-        return $http.get("/VStaff/GetListOfResidents");
+        return $http.get("/VStaff/GetListOfResidents")
     }
 });
