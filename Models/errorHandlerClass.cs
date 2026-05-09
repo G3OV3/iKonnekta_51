@@ -13,14 +13,21 @@ namespace iKonnekta_51.Models
         {
             using(var db = new IKONNEKTA51Context())
             {
-                var errorLog = new tbl_error_logs_model()
+                try
                 {
-                    Error_Description = $"{stackTrace} | {innerException} | {message}",
-                    Created_At = DateTime.Now,
-                    Edited_At = DateTime.Now
-                };
-                db.tbl_Error_Logs.Add(errorLog);
-                db.SaveChanges();
+                    var errorLog = new tbl_error_logs_model()
+                    {
+                        Error_Description = $"{stackTrace} | {innerException} | {message}",
+                        Created_At = DateTime.Now,
+                        Edited_At = DateTime.Now
+                    };
+                    db.tbl_Error_Logs.Add(errorLog);
+                    db.SaveChanges();
+                }
+                catch 
+                {
+
+                }
             }
         }
     }

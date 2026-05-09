@@ -57,7 +57,8 @@ namespace iKonnekta_51.Controllers
                     {
                         success = true,
                         roleId = user.Role_ID,
-                        userId = user.User_ID
+                        userId = user.User_ID,
+                        username = user.Username
                     });
                 }
             }

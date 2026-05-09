@@ -451,6 +451,11 @@
         var service = iKonnekta_51_Service.loginUserService(userLoginInfo);
         service.then(function (response) {
             if (response.data.success) {
+                sessionStorage.setItem("user", JSON.stringify({
+                    userId: response.data.userId,
+                    roleId: response.data.roleId,
+                    username: response.data.username
+                }));
                 if (response.data.roleId === 1) {
                     window.location.href = "/Resident/DashboardPage";
                 }
@@ -462,4 +467,10 @@
             }
         });
     };
+    // for Top bar username saka id
+    $scope.user = {};
+    var storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+        $scope.user = JSON.parse(storedUser);
+    }
 });
