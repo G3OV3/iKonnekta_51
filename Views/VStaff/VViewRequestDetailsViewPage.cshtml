@@ -49,7 +49,7 @@
                         <div>
                             <span class="info-label">Date Requested</span>
                             <p class="info-value">
-                                {{ requestDetails.dateRequested | date:'MMMM dd, yyyy' }}
+                                {{ (requestDetails.dateRequested.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd' }}
                             </p>
                         </div>
                     </div>

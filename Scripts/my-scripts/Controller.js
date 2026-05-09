@@ -678,20 +678,20 @@
         });
     };
     // view info about the request
+    $scope.viewRequest = function (id) {
+        window.location.href = "/VStaff/VViewRequestDetailsViewPage?id=" + id;
+    };
     $scope.requestDetails = {};
-    $scope.requestId = null;
     $scope.loadRequestDetails = function () {
         var urlParams = new URLSearchParams(window.location.search);
         $scope.requestId = urlParams.get("id");
 
-        if (!$scope.requestId) {
-            return
-        };
+        if (!$scope.requestId) return;
 
         var Service = iKonnekta_51_Service.getRequestDetailsService($scope.requestId);
 
         Service.then(function (response) {
-            $scope.requestDetails = response.data;
+            $scope.requestDetails = response.data || {};
         });
     };
 });

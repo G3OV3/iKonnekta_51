@@ -409,7 +409,6 @@ namespace iKonnekta_51.Controllers
                 return Json(new List<object>(), JsonRequestBehavior.AllowGet);
             }
         }
-        // view request
         public JsonResult GetRequestDetails(int requestId)
         {
             try
@@ -454,13 +453,13 @@ namespace iKonnekta_51.Controllers
                             requestId = r.Document_Request_ID,
 
                             fullName =
-                                (fullname.First_Name + " " +
-                                 fullname.Middle_Name + " " +
-                                 fullname.Last_Name),
+                                (fullname.First_Name ?? "") + " " +
+                                (fullname.Middle_Name ?? "") + " " +
+                                (fullname.Last_Name ?? ""),
 
                             contactNumber = res.Contact_Number,
 
-                            address = res.Email_Address, // adjust if column name differs
+                            address = res.Address,
 
                             documentType = t.Document_Name,
                             purpose = p.Purpose_Description,
@@ -474,14 +473,9 @@ namespace iKonnekta_51.Controllers
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-                return Json(new { success = false });
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
 
