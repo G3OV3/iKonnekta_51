@@ -622,4 +622,53 @@
             }
         });
     };
+    // Tracking request
+    $scope.requests = [];
+
+    $scope.loadTrackingRequests = function () {
+
+        var storedUser = sessionStorage.getItem("user");
+        if (!storedUser) return;
+
+        var user = JSON.parse(storedUser);
+        if (!user || !user.userId) return;
+
+        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
+
+        Service.then(function (response) {
+
+            $scope.requests = response.data || [];
+
+        });
+    };
+    $scope.loadTrackingRequests();
+    $scope.cancelRequest = function (request) {
+
+        Swal.fire({
+            title: "Cancel Request?",
+            text: "This action cannot be undone",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, cancel it"
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                var Service = iKonnekta_51_Service.cancelRequestService(request.requestId);
+
+                Service.then(function (response) {
+
+                    if (response.data.success) {
+
+                        request.status = "Cancelled";
+
+                        Swal.fire("Cancelled", "Request has been cancelled", "success");
+
+                        $scope.loadTrackingRequests(); // refresh
+                    }
+                });
+            }
+        });
+    };
+
 });

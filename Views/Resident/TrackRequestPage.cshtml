@@ -62,7 +62,9 @@
 
                     <div>
                         <p class="text-xs text-gray-400">Submitted Date</p>
-                        <p class="text-sm font-semibold text-gray-800">{{ request.submittedDate }}</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            {{ (request.submittedDate.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd' }}
+                        </p>
                     </div>
                 </div>
 

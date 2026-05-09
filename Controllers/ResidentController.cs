@@ -225,6 +225,81 @@ namespace iKonnekta_51.Controllers
                 });
             }
         }
+        // tracking request
+        public JsonResult getTrackingRequests(int residentId)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var data = (
+                        from r in db.tbl_Document_Requests
+                        join t in db.tbl_Document_Types
+                            on r.Document_Type_ID equals t.Document_Type_ID
+                        join p in db.tbl_Request_Purposes
+                            on r.Purpose_ID equals p.Purpose_ID
+                        join s in db.tbl_Document_Request_Status
+                            on r.Request_Status_ID equals s.Request_Status_ID
+                        join res in db.tbl_Residents
+                            on r.Resident_ID equals res.Resident_ID
+                        where r.Resident_ID == residentId
+                              && r.Request_Status_ID == 1 
+                        orderby r.Created_At descending
+
+                        select new
+                        {
+                            requestId = r.Document_Request_ID,
+                            documentType = t.Document_Name,
+                            status = s.Request_Status_Description,
+                            purpose = p.Purpose_Description,
+                            submittedDate = r.Created_At,
+                            contact = res.Contact_Number,
+                            estimatedCompletion = s.Estimation_Completion_Time
+                        }
+                    ).ToList();
+
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+
+                return Json(new { success = false });
+            }
+        }
+        public JsonResult cancelRequest(int requestId)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var request = db.tbl_Document_Requests.FirstOrDefault(x => x.Document_Request_ID == requestId);
+
+                    if (request == null)
+                    {
+                        return Json(new { success = false, message = "Not found" });
+                    }
+                    if (request.Request_Status_ID != 1)
+                    {
+                        return Json(new { success = false, message = "Cannot cancel this request" });
+                    }
+
+                    request.Request_Status_ID = 4;
+                    request.Edited_At = DateTime.Now;
+
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+
+                return Json(new { success = false });
+            }
+        }
 
     }
 }

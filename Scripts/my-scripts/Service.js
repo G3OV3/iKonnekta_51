@@ -39,7 +39,6 @@
     this.getListOfResidentsService = function () {
         return $http.get("/VStaff/GetListOfResidents")
     }
-<<<<<<< HEAD
     // submit request
     this.getResidentInfoService = function (residentId) {
 
@@ -66,10 +65,24 @@
             data: requestData
         });
     };
-=======
     this.getResidentAccService = function () {
         return $http.get("/VStaff/GetRegisteredAccounts")
     }
-
->>>>>>> registererd Acc done
+    // Tracking request
+    this.getTrackingRequestsService = function (residentId) {
+        return $http({
+            url: "/Resident/getTrackingRequests",
+            method: "post",
+            data: {
+                residentId: residentId
+            }
+        });
+    };
+    this.cancelRequestService = function (requestId) {
+        return $http({
+            url: "/Resident/cancelRequest",
+            method: "post",
+            data: { requestId: requestId }
+        });
+    };
 });
