@@ -473,4 +473,43 @@
     if (storedUser) {
         $scope.user = JSON.parse(storedUser);
     }
+    // 2. Resident
+    // for cards data
+    $scope.dashboardStats = {};
+    $scope.loadDashboardStats = function () {
+
+        var storedUser = sessionStorage.getItem("user");
+        if (!storedUser) {
+            return;
+        }
+
+        var user = JSON.parse(storedUser);
+
+        if (!user || !user.userId) {
+            return;
+        }
+
+        var Service = iKonnekta_51_Service.getDashboardStatsService(user.userId);
+
+        Service.then(function (response) {
+            $scope.dashboardStats = response.data;
+        });
+    };
+    $scope.loadDashboardStats();
+    // for recent list
+    $scope.loadRecentRequest = function () {
+        var storedUser = sessionStorage.getItem("user");
+        if (!storedUser) {
+            return;
+        }
+        var user = JSON.parse(storedUser);
+        if (!user || !user.userId) {
+            return;
+        }
+        var Service = iKonnekta_51_Service.getRecentRequestListService(user.userId);
+        Service.then(function (response) {
+            $scope.requests = response.data;
+        });
+    }
+    $scope.loadRecentRequest();
 });
