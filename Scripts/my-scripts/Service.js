@@ -39,4 +39,30 @@
     this.getListOfResidentsService = function () {
         return $http.get("/VStaff/GetListOfResidents")
     }
+    // submit request
+    this.getResidentInfoService = function (residentId) {
+
+        return $http({
+
+            url: "/Resident/getResidentInfo",
+
+            method: "post",
+
+            data: {
+                residentId: residentId
+            }
+        });
+    };
+
+    this.submitRequestService = function (requestData) {
+
+        return $http({
+
+            url: "/Resident/submitDocumentRequest",
+
+            method: "post",
+
+            data: requestData
+        });
+    };
 });

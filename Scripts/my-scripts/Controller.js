@@ -315,48 +315,57 @@
     };
 
     $scope.options = {
-        barangayClearance: [
-            { value: 'job_application', label: 'Job application' },
-            { value: 'business_permit', label: 'Business permit' },
-            { value: 'passport_requirement', label: 'Passport requirement' },
-            { value: 'bank_requirement', label: 'Bank requirement' }
+        // Document_Type_ID = 1
+        1: [
+            { value: 1, label: 'Job Application' },
+            { value: 2, label: 'Business Permit' },
+            { value: 3, label: 'Passport Requirement' },
+            { value: 4, label: 'Bank Requirement' }
         ],
-        barangayCertificate: [
-            { value: 'general_certification', label: 'General certification' },
-            { value: 'personal_use', label: 'Personal use' },
-            { value: 'proof_of_identity', label: 'Proof of identity' },
-            { value: 'community_verification', label: 'Community verification' }
-        ],
-        certificateOfResidency: [
-            { value: 'school_enrollment', label: 'School requirement' },
-            { value: 'scholarship_application', label: 'Scholarship application' },
-            { value: 'passport_application', label: 'Passport application' },
-            { value: 'bank_account_opening', label: 'Bank account opening' },
-            { value: 'voter_registration', label: 'Voter registration' },
-            { value: 'housing_application', label: 'Housing application' },
-            { value: 'id_application', label: 'ID application' }
 
+        // Document_Type_ID = 2
+        2: [
+            { value: 12, label: 'General Certification' },
+            { value: 13, label: 'Personal Use' },
+            { value: 14, label: 'Proof of Identity' },
+            { value: 15, label: 'Community Verification' }
         ],
-        certificateOfIdigency: [
-            { value: 'medical_assistance', label: 'Medical assistance' },
-            { value: 'hospital_admission', label: 'Hospital admission' },
-            { value: 'financial_assistance', label: 'Financial assistance' },
-            { value: 'charity_assistance', label: 'Charity Assistance' },
-            { value: 'scholarship_application', label: 'Scholarship application' },
-            { value: 'burial_assistance', label: 'Burial assistance' },
-            { value: '4Ps/DSWD_requirement', label: '4Ps / DSWD requirement' },
+
+        // Document_Type_ID = 3
+        3: [
+            { value: 5, label: 'School Requirement' },
+            { value: 6, label: 'Scholarship Application' },
+            { value: 7, label: 'Passport Application' },
+            { value: 8, label: 'Bank Account Opening' },
+            { value: 9, label: 'Voter Registration' },
+            { value: 10, label: 'Housing Application' },
+            { value: 11, label: 'ID Application' }
         ],
-        certificateOfCohabitation: [
-            { value: 'solo_parent_benefits', label: 'Solo parent benefits' },
-            { value: 'DSWD_application', label: 'DSWD application' },
-            { value: 'school_assistance', label: 'School assistance' },
-            { value: 'government_welfare_programs', label: 'Government welfare programs' }
+
+        // Document_Type_ID = 4
+        4: [
+            { value: 16, label: 'Medical Assistance' },
+            { value: 17, label: 'Hospital Admission' },
+            { value: 18, label: 'Financial Assistance' },
+            { value: 19, label: 'Charity Assistance' },
+            { value: 20, label: 'Scholarship Application' },
+            { value: 21, label: 'Burial Assistance' },
+            { value: 22, label: '4Ps / DSWD Requirement' }
         ],
-        firstTimeJobSeekerCert: [
-            { value: 'nbi_police_clearance', label: 'NBI / Police Clearance Requirement' },
-            { value: 'employment_application', label: 'Employment application' },
-            { value: 'Pre-employment requirements', label: 'Pre-employment requirements' }
-        
+
+        // Document_Type_ID = 5
+        5: [
+            { value: 23, label: 'Solo Parent Benefits' },
+            { value: 24, label: 'DSWD Application' },
+            { value: 25, label: 'School Assistance' },
+            { value: 26, label: 'Government Welfare Programs' }
+        ],
+
+        // Document_Type_ID = 6
+        6: [
+            { value: 27, label: 'NBI / Police Clearance Requirement' },
+            { value: 28, label: 'Employment Application' },
+            { value: 29, label: 'Pre-employment Requirements' }
         ]
     };
 
@@ -549,4 +558,58 @@
         });
     };
     // for submiting request
+    $scope.residentInfo = {};
+    $scope.loadResidentInfo = function () {
+
+        var storedUser = sessionStorage.getItem("user");
+
+        if (!storedUser) return;
+
+        var user = JSON.parse(storedUser);
+
+        if (!user || !user.userId) return;
+
+        var Service = iKonnekta_51_Service.getResidentInfoService(user.userId);
+
+        Service.then(function (response) {
+            $scope.residentInfo = response.data || {};
+        });
+    };
+    $scope.loadResidentInfo();
+    $scope.submitRequest = function () {
+
+        if (!$scope.selectedDocument || !$scope.selectedPurpose) {
+            Swal.fire("Warning", "Please complete all fields", "warning");
+            return;
+        }
+
+        var storedUser = sessionStorage.getItem("user");
+        var user = JSON.parse(storedUser);
+
+        var requestData = {
+            Resident_ID: user.userId, // ✅ FIXED HERE
+
+            Document_Type_ID: parseInt($scope.selectedDocument),
+            Purpose_ID: parseInt($scope.selectedPurpose),
+            Quantity: $scope.qty,
+            Priority_Level_ID: 1
+        };
+
+        var Service = iKonnekta_51_Service.submitRequestService(requestData);
+
+        Service.then(function (response) {
+
+            if (response.data.success) {
+
+                Swal.fire("Success", response.data.message, "success");
+
+                $scope.selectedDocument = "";
+                $scope.selectedPurpose = "";
+                $scope.qty = 1;
+            }
+            else {
+                Swal.fire("Warning", response.data.message, "warning");
+            }
+        });
+    };
 });

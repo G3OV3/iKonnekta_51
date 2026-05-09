@@ -1,5 +1,6 @@
 ﻿using iKonnekta_51.Models;
 using iKonnekta_51.Models.Context;
+using iKonnekta_51.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,6 +104,125 @@ namespace iKonnekta_51.Controllers
             {
                 errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        // submit request
+        public JsonResult getResidentInfo(int residentId)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+
+                    var resident = (
+
+                        from r in db.tbl_Residents
+
+                        join rd in db.tbl_Resident_Details
+                        on r.Resident_Details_ID equals rd.Resident_Details_ID
+
+                        join rf in db.tbl_Resident_Fullname
+                        on rd.Resident_FullName_ID equals rf.Resident_FullName_ID
+
+                        join rb in db.tbl_Resident_Birth_Details
+                        on rd.Resident_Birth_ID equals rb.Resident_Birth_ID
+
+                        where r.Resident_ID == residentId
+
+                        select new
+                        {
+                            firstName = rf.First_Name,
+                            lastName = rf.Last_Name,
+
+                            address = rb.Birth_Place,
+
+                            contact = r.Contact_Number
+                        }
+
+                    ).FirstOrDefault();
+
+                    return Json(resident, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult submitDocumentRequest(tbl_document_requests_model requestData)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+
+                    var existingCount = db.tbl_Document_Requests
+
+                        .Count(x =>
+
+                            x.Resident_ID == requestData.Resident_ID &&
+
+                            x.Document_Type_ID == requestData.Document_Type_ID
+                        );
+
+                    if (existingCount >= 3)
+                    {
+                        return Json(new
+                        {
+                            success = false,
+                            message = "You can only request the same document 3 times."
+                        });
+                    }
+
+                    var request = new tbl_document_requests_model()
+                    {
+                        Resident_ID = requestData.Resident_ID,
+
+                        Document_Type_ID = requestData.Document_Type_ID,
+
+                        Purpose_ID = requestData.Purpose_ID,
+
+                        Quantity = requestData.Quantity,
+
+                        Priority_Level_ID = requestData.Priority_Level_ID,
+
+                        Request_Status_ID = 1,
+
+                        Created_At = DateTime.Now,
+
+                        Edited_At = DateTime.Now
+                    };
+
+                    db.tbl_Document_Requests.Add(request);
+
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        success = true,
+                        message = "Document request submitted successfully."
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new
+                {
+                    success = false,
+                    message = "An error occurred"
+                });
             }
         }
 
