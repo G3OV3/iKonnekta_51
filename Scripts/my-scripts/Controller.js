@@ -503,6 +503,7 @@
             return;
         }
         var user = JSON.parse(storedUser);
+
         if (!user || !user.userId) {
             return;
         }
@@ -510,6 +511,5 @@
         Service.then(function (response) {
             $scope.requests = response.data;
         });
-    }
-    $scope.loadRecentRequest();
+    };
 });

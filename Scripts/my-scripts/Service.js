@@ -28,13 +28,12 @@
         return response;
     }
     this.getRecentRequestListService = function (residentId) {
-        var response = $http({
+        return $http({
             url: "/Resident/getRecentRequestList",
             method: "post",
             data: {
                 residentId: residentId
             }
         });
-        return response;
-    }
+    };
 });

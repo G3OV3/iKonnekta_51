@@ -118,12 +118,13 @@
 
             </div>
 
-            <div class="card2">
+            <div class="card2" ng-init="loadRecentRequest()">
+
                 <h2 class="text-base font-bold mb-3">Recent Requests</h2>
                 <hr class="border-gray-200 mb-4">
 
                 <!-- Empty state -->
-                <div ng-if="requests.length === 0">
+                <div ng-if="!requests || requests.length === 0">
                     <p class="text-xs text-gray-400">No requests found.</p>
                 </div>
 
@@ -131,26 +132,42 @@
                 <div ng-repeat="request in requests"
                      class="flex justify-between items-start"
                      ng-class="{ 'mb-4 pb-4 border-b border-gray-100': !$last }">
+
                     <div>
+
                         <div class="flex items-center gap-2 mb-1">
-                            <h3 class="text-sm font-bold">{{ request.type }}</h3>
+                            <h3 class="text-sm font-bold">
+                                {{ request.DocumentType.Document_Name }}
+                            </h3>
+
                             <span class="bg-blue-100 text-blue-600 border border-blue-200 text-xs font-medium px-3 py-0.5 rounded-full">
-                                {{ request.status }}
+                                {{ request.Status.Request_Status_Description }}
                             </span>
                         </div>
-                        <p class="text-xs text-gray-500">Request ID: {{ request.id }}</p>
-                        <p class="text-xs text-gray-500">Purpose: {{ request.purpose }}</p>
-                        <p class="text-xs text-gray-400 mt-2">Submitted: {{ request.submitted }}</p>
+
+                        <p class="text-xs text-gray-500">
+                            Request ID: {{ request.Request.Document_Request_ID }}
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            Purpose: {{ request.Purpose.Purpose_Description }}
+                        </p>
+
+                        <p class="text-xs text-gray-400 mt-2">
+                            Submitted: {{ (request.Request.Created_At.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd'}}
+                        </p>
+
                     </div>
 
-                    <a href=""
-                       ng-click="navigate('trackRequest', request.id)"
-                       class="text-blue-600 text-sm hover:underline self-center">
+                    <a ng-click="navigate('trackRequest', request.Request.Document_Request_ID)"
+                       class="text-blue-600 text-sm hover:underline self-center cursor-pointer">
                         View Details
                     </a>
+
                 </div>
 
             </div>
+
         </div>
     </main>
 </div>

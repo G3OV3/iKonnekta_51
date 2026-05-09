@@ -88,11 +88,10 @@ namespace iKonnekta_51.Controllers
                                 orderby r.Created_At descending
                                 select new
                                 {
-                                    id = r.Document_Request_ID,
-                                    type = t.Document_Name,
-                                    status = s.Request_Status_Description,
-                                    purpose = p.Purpose_Description,
-                                    submitted = r.Created_At
+                                    Request = r,
+                                    DocumentType = t,
+                                    Purpose = p,
+                                    Status = s
                                 })
                                 .Take(3)
                                 .ToList();
@@ -103,7 +102,7 @@ namespace iKonnekta_51.Controllers
             catch (Exception ex)
             {
                 errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
-                return Json(new { success = false });
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }
