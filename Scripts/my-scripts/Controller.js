@@ -411,7 +411,20 @@
     $scope.residentArchieveArr = [];
 
     //List of residents
-    $scope.listOfResidentArr = [];
+
+    //$scope.listOfResidentArr = [];
+    $scope.getListOfResidents = function () {
+        iKonnekta_51_Service.getListOfResidentsService()
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.residentsList = response.data.data;
+                } else {
+                    console.error("Failed to fetch residents:", response.data.message);
+                }
+            })
+    };
+
+
     // Authentication:
     // 1. Register
     $scope.registerUser = function () {
