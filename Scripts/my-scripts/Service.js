@@ -16,7 +16,6 @@
         });
         return response;
     }
-<<<<<<< HEAD
     // 2. Resident
     this.getDashboardStatsService = function (residentId) {
         var response = $http({
@@ -37,9 +36,7 @@
             }
         });
     };
-=======
     this.getListOfResidentsService = function () {
-        return $http.get("/VStaff/GetListOfResidents")
+        return $http.get("/VStaff/GetListOfResidents");
     }
->>>>>>> latest
 });
