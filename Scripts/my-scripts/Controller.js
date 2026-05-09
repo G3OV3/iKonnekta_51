@@ -600,7 +600,7 @@
         });
     };
     // Tracking request
-    $scope.requests = {};
+    $scope.requests = [];
 
     $scope.loadTrackingRequests = function () {
         var storedUser = sessionStorage.getItem("user");
@@ -612,7 +612,7 @@
         if (!user || !user.userId) {
             return
         };
-
+        $scope.requests = [];
 
         var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
 

@@ -324,19 +324,19 @@ namespace iKonnekta_51.Controllers
                         {
                             requestId = r.Document_Request_ID,
 
-                            documentType = t != null ? t.Document_Name : "Unknown Document",
+                            documentType = t.Document_Name,
 
-                            progress = pg != null ? pg.Progress_Description : "Processing",
+                            progress = pg.Progress_Description,
 
-                            purpose = p != null ? p.Purpose_Description : "N/A",
+                            purpose = p.Purpose_Description,
 
                             submittedDate = r.Created_At,
 
-                            contact = res != null ? res.Contact_Number : "",
+                            contact = res.Contact_Number,
 
-                            estimatedCompletion = s != null ? s.Estimation_Completion_Time : 0,
+                            estimatedCompletion = s.Estimation_Completion_Time,
 
-                            queuePosition = s != null ? s.Queue_Position : 0
+                            queuePosition = s.Queue_Position
                         }
                     ).ToList();
 
