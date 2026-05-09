@@ -7,4 +7,12 @@
         });
         return response;
     }
+    this.loginUserService = function (userLoginInfo) {
+        var response = $http({
+            url: "/iKonnekta_51/loginUser",
+            method: "post",
+            data: userLoginInfo
+        });
+        return response;
+    }
 });

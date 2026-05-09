@@ -25,6 +25,53 @@ namespace iKonnekta_51.Controllers
         {
            return View();
         }
+        public JsonResult loginUser(tbl_user_model userLoginInfo)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var user = db.tbl_Users.FirstOrDefault(x => x.Username == userLoginInfo.Username);
+
+                    if (user == null)
+                    {
+                        return Json(new { success = false, message = "User not found" });
+                    }
+                    if (user.Account_Status_ID != 1)
+                    {
+                        return Json(new { success = false, message = "Account is inactive" });
+                    }
+                    bool isPasswordValid = BCrypt.Net.BCrypt.Verify(userLoginInfo.Password, user.Password);
+                    if (!isPasswordValid)
+                    {
+                        return Json(new { success = false, message = "Invalid password" });
+                    }
+                    user.Last_Login = DateTime.Now;
+                    db.tbl_System_Logs.Add(new tbl_system_logs_model
+                    {
+                        User_ID = user.User_ID,
+                        Logged_In_At = DateTime.Now,
+                    });
+                    db.SaveChanges();
+                    return Json(new
+                    {
+                        success = true,
+                        roleId = user.Role_ID,
+                        userId = user.User_ID
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new { success = false, message = "An error occurred" });
+            }
+        }
         public JsonResult registerUser(RegisterViewModel userInfo)
         {
             try
@@ -71,7 +118,7 @@ namespace iKonnekta_51.Controllers
                         Resident_ID = resident.Resident_ID,
                         Username = userInfo.Username,
                         Password = BCrypt.Net.BCrypt.HashPassword(userInfo.Password),
-                        Role_ID = 1,
+                        Role_ID = 2,
                         Account_Status_ID = 1,
                         Last_Login = null,
                         Created_At = DateTime.Now,

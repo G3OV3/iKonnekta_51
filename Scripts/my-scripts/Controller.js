@@ -412,7 +412,8 @@
 
     //List of residents
     $scope.listOfResidentArr = [];
-    // Authentication
+    // Authentication:
+    // 1. Register
     $scope.registerUser = function () {
         var userInfo = {
             PhySys_Card_No: $scope.cardNo,
@@ -437,4 +438,28 @@
             }
         });
     }
+    // 2. Login
+    $scope.loginUser = function () {
+        if (!$scope.User_Username || !$scope.User_Password) {
+            Swal.fire("Warning", "Please fill in all fields", "warning");
+            return;
+        }
+        var userLoginInfo = {
+            Username: $scope.User_Username,
+            Password: $scope.User_Password
+        };
+        var service = iKonnekta_51_Service.loginUserService(userLoginInfo);
+        service.then(function (response) {
+            if (response.data.success) {
+                if (response.data.roleId === 1) {
+                    window.location.href = "/Resident/DashboardPage";
+                }
+                else if (response.data.roleId === 2) {
+                    window.location.href = "/VStaff/VDashboardViewPage";
+                }
+            } else {
+                Swal.fire("Login Failed", response.data.message, "error");
+            }
+        });
+    };
 });
