@@ -587,8 +587,7 @@
         var user = JSON.parse(storedUser);
 
         var requestData = {
-            Resident_ID: user.userId, // ✅ FIXED HERE
-
+            Resident_ID: user.userId, 
             Document_Type_ID: parseInt($scope.selectedDocument),
             Purpose_ID: parseInt($scope.selectedPurpose),
             Quantity: $scope.qty,
