@@ -413,8 +413,18 @@
     //Req and History
     $scope.reqAndHistoryArr = [];
 
-    //Reg Acc
-    $scope.residentAccsArr = [];
+    //Resident Acc
+    //$scope.residentAccsArr = [];
+    $scope.getResidentAccs = function () {
+        iKonnekta_51_Service.getResidentAccService()
+            .then(function (response) {
+                if (response.data.success) {
+                    $scope.residentsAccs = response.data.data;
+                } else {
+                    console.error("Failed to fetch residents:", response.data.message);
+                }
+            })
+    }
 
     //Archieve
     $scope.residentArchieveArr = [];
@@ -433,6 +443,7 @@
             })
     };
 
+    
 
     // Authentication:
     // 1. Register

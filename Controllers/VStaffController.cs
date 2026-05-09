@@ -103,5 +103,54 @@ namespace iKonnekta_51.Controllers
             }
         }
 
+        public JsonResult GetRegisteredAccounts()
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var getResidentAccounts = (from account in db.tbl_Users
+                                               join resident in db.tbl_Residents
+                                                   on account.Resident_ID equals resident.Resident_ID
+                                               join details in db.tbl_Resident_Details
+                                                   on resident.Resident_Details_ID equals details.Resident_Details_ID
+                                               join fullname in db.tbl_Resident_Fullname
+                                                   on details.Resident_FullName_ID equals fullname.Resident_FullName_ID
+                                               join role in db.tbl_User_Roles
+                                                   on account.Role_ID equals role.Role_ID
+                                               join status in db.tbl_User_Account_Status
+                                                   on account.Account_Status_ID equals status.Account_Status_ID
+                                               select new
+                                               {
+                                                   account.User_ID,
+                                                   account.Resident_ID,
+                                                   account.Username,
+                                                   account.Last_Login,
+                                                   account.Created_At,
+                                                   account.Updated_At,
+                                                   resident.PhySys_Card_No,
+                                                   fullname.Last_Name,
+                                                   fullname.First_Name,
+                                                   fullname.Middle_Name,
+                                                   fullname.Suffix,
+                                                   Role_Name = role.Role_Description,        // use the label column, not the ID
+                                                   Account_Status = status.Account_Status_Description  // renamed to match frontend
+                                               }).ToList();
+
+                    return Json(new { success = true, data = getResidentAccounts }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                  ex.StackTrace,
+                  ex.InnerException?.ToString(),
+                  ex.Message
+              );
+                return Json(new { success = false, message = "An error occurred" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

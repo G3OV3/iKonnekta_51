@@ -60,20 +60,20 @@
                     </thead>
                     <tbody>
 
-                        @*<tr ng-if="!listOfResidentArr || listOfResidentArr.length === 0">
+                        <tr ng-if="!residentsList || residentsList.length === 0">
                             <td colspan="9" class="text-center py-6 text-gray-400 mt-2">
                                 No requests found.
                             </td>
-                        </tr>*@
+                        </tr>
 
                         <tr ng-repeat="resident in residentsList" class="hover:bg-gray-50 transition-colors">
                             <td class="font-semibold text-gray-900 px-4 py-4">{{resident.PhySys_Card_No}}</td>
                             <td class="font-semibold text-gray-900 px-4 py-4">{{ resident.Last_Name}}</td>
                             <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.First_Name }}</td>
                             <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Middle_Name}}</td>
-                            <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Suffix }}</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Suffix || 'No suffix'}}</td>
                             <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Contact_Number }}</td>
-                            <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Email_Address}}</td>
+                            <td class="text-[#2D3748] font-medium px-4 py-4 ">{{ resident.Email_Address || 'No email'}}</td>
                             <td class="px-4 py-4">
                                 <div class="flex flex-col">
                                     <span><button class="btn-view hover:text-blue-400" ng-click="">View Resident</button></span>

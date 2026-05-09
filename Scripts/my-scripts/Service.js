@@ -39,6 +39,7 @@
     this.getListOfResidentsService = function () {
         return $http.get("/VStaff/GetListOfResidents")
     }
+<<<<<<< HEAD
     // submit request
     this.getResidentInfoService = function (residentId) {
 
@@ -65,4 +66,10 @@
             data: requestData
         });
     };
+=======
+    this.getResidentAccService = function () {
+        return $http.get("/VStaff/GetRegisteredAccounts")
+    }
+
+>>>>>>> registererd Acc done
 });
