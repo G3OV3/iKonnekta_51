@@ -39,6 +39,7 @@
     this.getListOfResidentsService = function () {
         return $http.get("/VStaff/GetListOfResidents")
     }
+<<<<<<< HEAD
     // submit request
     this.getResidentInfoService = function (residentId) {
 
@@ -85,4 +86,7 @@
             data: { requestId: requestId }
         });
     };
+=======
+>>>>>>> latest
+>>>>>>> format of date in archieve
 });
