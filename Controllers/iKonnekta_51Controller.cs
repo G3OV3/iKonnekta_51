@@ -36,7 +36,7 @@ namespace iKonnekta_51.Controllers
                         return Json(new { success = false, message = "Invalid request data." });
                     }
 
-                    var pcn = userInfo.PhySys_Card_No?.Trim();
+                    var pcn = userInfo.PhySys_Card_No.Trim();
 
                     var resident = db.tbl_Residents
                         .FirstOrDefault(r => r.PhySys_Card_No == pcn);
@@ -73,6 +73,7 @@ namespace iKonnekta_51.Controllers
                         Password = BCrypt.Net.BCrypt.HashPassword(userInfo.Password),
                         Role_ID = 1,
                         Account_Status_ID = 1,
+                        Last_Login = null,
                         Created_At = DateTime.Now,
                         Updated_At = DateTime.Now
                     };
@@ -82,10 +83,11 @@ namespace iKonnekta_51.Controllers
 
                     return Json(new { success = true });
                 }
-            } catch (Exception ex) {
+            } catch (Exception ex) 
+            {
                 errorHandlerClass.errorHandler(
                     ex.StackTrace,
-                    ex.InnerException != null ? ex.InnerException.ToString() : "",
+                    ex.InnerException.ToString(),
                     ex.Message
                 );
 
