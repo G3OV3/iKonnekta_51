@@ -575,7 +575,7 @@
         var user = JSON.parse(storedUser);
 
         var requestData = {
-            Resident_ID: user.userId, 
+            Resident_ID: user.residentId, 
             Document_Type_ID: parseInt($scope.selectedDocument),
             Purpose_ID: parseInt($scope.selectedPurpose),
             Quantity: $scope.qty,
@@ -614,7 +614,7 @@
         };
         $scope.requests = [];
 
-        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
+        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.residentId);
 
         Service.then(function (response) {
             $scope.requests = response.data || [];
