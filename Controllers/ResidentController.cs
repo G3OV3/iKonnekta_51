@@ -282,56 +282,6 @@ namespace iKonnekta_51.Controllers
             }
         }
         // tracking request
-        public JsonResult getTrackingRequests(int residentId)
-        {
-            try
-            {
-                using (var db = new IKONNEKTA51Context())
-                {
-                    var data = (
-                        from r in db.tbl_Document_Requests
-
-                        join t in db.tbl_Document_Types
-                            on r.Document_Type_ID equals t.Document_Type_ID
-
-                        join p in db.tbl_Request_Purposes
-                            on r.Purpose_ID equals p.Purpose_ID
-
-                        join s in db.tbl_Document_Request_Status
-                            on r.Request_Status_ID equals s.Request_Status_ID
-
-                        join pg in db.tbl_request_progress
-                            on s.Progress_ID equals pg.Progress_ID
-
-                        join res in db.tbl_Residents
-                            on r.Resident_ID equals res.Resident_ID
-
-                        where r.Resident_ID == residentId
-
-                        orderby r.Created_At descending
-
-                        select new
-                        {
-                            requestId = r.Document_Request_ID,
-                            documentType = t.Document_Name,
-                            progress = pg.Progress_Description,
-                            purpose = p.Purpose_Description,
-                            submittedDate = r.Created_At,
-                            contact = res.Contact_Number,
-                            estimatedCompletion = s.Estimation_Completion_Time,
-                            queuePosition = s.Queue_Position
-                        }
-                    ).ToList();
-
-                    return Json(data, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
-                return Json(new { success = false });
-            }
-        }
         public JsonResult cancelRequest(int requestId)
         {
             try

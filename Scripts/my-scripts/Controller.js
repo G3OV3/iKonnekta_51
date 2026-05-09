@@ -611,7 +611,7 @@
 
         $scope.requests = []; // 🔥 important reset before load
 
-        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
+        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.residentId);
 
         Service.then(function (response) {
 
