@@ -32,7 +32,6 @@ namespace iKonnekta_51.Controllers
                 using (var db = new IKONNEKTA51Context())
                 {
                     var user = db.tbl_Users.FirstOrDefault(x => x.Username == userLoginInfo.Username);
-
                     if (user == null)
                     {
                         return Json(new { success = false, message = "User not found" });
@@ -51,6 +50,7 @@ namespace iKonnekta_51.Controllers
                     {
                         User_ID = user.User_ID,
                         Logged_In_At = DateTime.Now,
+                        Logged_Out_At = null,
                     });
                     db.SaveChanges();
                     return Json(new
