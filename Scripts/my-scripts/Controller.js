@@ -626,10 +626,10 @@
 
         Swal.fire({
             title: "Cancel Request?",
-            text: "This action cannot be undone",
+            text: "This will permanently delete the request.",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, cancel it"
+            confirmButtonText: "Yes, Delete"
         }).then((result) => {
 
             if (result.isConfirmed) {
@@ -640,11 +640,12 @@
 
                     if (response.data.success) {
 
-                        request.progress = "Cancelled";
+                        // remove from UI
+                        $scope.requests = $scope.requests.filter(r =>
+                            r.requestId !== request.requestId
+                        );
 
-                        Swal.fire("Cancelled", "Request has been cancelled", "success");
-
-                        $scope.loadTrackingRequests(); // refresh
+                        Swal.fire("Deleted", "Request removed", "success");
                     }
                 });
             }

@@ -365,30 +365,32 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var request = db.tbl_Document_Requests.FirstOrDefault(x => x.Document_Request_ID == requestId);
+                    var request = db.tbl_Document_Requests
+                                    .FirstOrDefault(r => r.Document_Request_ID == requestId);
 
                     if (request == null)
                     {
-                        return Json(new { success = false, message = "Not found" });
-                    }
-                    if (request.Request_Status_ID != 1)
-                    {
-                        return Json(new { success = false, message = "Cannot cancel this request" });
+                        return Json(new { success = false, message = "Request not found" },
+                            JsonRequestBehavior.AllowGet);
                     }
 
-                    request.Request_Status_ID = 4;
-                    request.Edited_At = DateTime.Now;
-
+                    db.tbl_Document_Requests.Remove(request);
                     db.SaveChanges();
 
-                    return Json(new { success = true });
+                    return Json(new { success = true, message = "Request deleted" },
+                        JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
 
-                return Json(new { success = false });
+                return Json(new { success = false, message = "Error deleting request" },
+                    JsonRequestBehavior.AllowGet);
             }
         }
 
