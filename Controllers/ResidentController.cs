@@ -291,24 +291,30 @@ namespace iKonnekta_51.Controllers
                     var data = (
                         from r in db.tbl_Document_Requests
 
+                            // Document Type (LEFT JOIN)
                         join t in db.tbl_Document_Types
-                            on r.Document_Type_ID equals t.Document_Type_ID
+                            on r.Document_Type_ID equals t.Document_Type_ID into tGroup
+                        from t in tGroup.DefaultIfEmpty()
 
+                            // Purpose (LEFT JOIN)
                         join p in db.tbl_Request_Purposes
-                            on r.Purpose_ID equals p.Purpose_ID
+                            on r.Purpose_ID equals p.Purpose_ID into pGroup
+                        from p in pGroup.DefaultIfEmpty()
 
-                        join res in db.tbl_Residents
-                            on r.Resident_ID equals res.Resident_ID
-
-                        // LEFT JOIN STYLE (FIX)
+                            // Status (LEFT JOIN)
                         join s in db.tbl_Document_Request_Status
-                            on r.Request_Status_ID equals s.Request_Status_ID into statusGroup
-                        from s in statusGroup.DefaultIfEmpty()
+                            on r.Request_Status_ID equals s.Request_Status_ID into sGroup
+                        from s in sGroup.DefaultIfEmpty()
 
-                            // LEFT JOIN progress (SAFE)
+                            // Progress (LEFT JOIN)
                         join pg in db.tbl_request_progress
-                            on (s != null ? s.Progress_ID : 1) equals pg.Progress_ID into progressGroup
-                        from pg in progressGroup.DefaultIfEmpty()
+                            on s.Progress_ID equals pg.Progress_ID into pgGroup
+                        from pg in pgGroup.DefaultIfEmpty()
+
+                            // Resident (optional, but safe if needed)
+                        join res in db.tbl_Residents
+                            on r.Resident_ID equals res.Resident_ID into resGroup
+                        from res in resGroup.DefaultIfEmpty()
 
                         where r.Resident_ID == residentId
 
@@ -317,23 +323,20 @@ namespace iKonnekta_51.Controllers
                         select new
                         {
                             requestId = r.Document_Request_ID,
-                            documentType = t.Document_Name,
 
-                            progress = pg != null
-                                ? pg.Progress_Description
-                                : "Processing",
+                            documentType = t != null ? t.Document_Name : "Unknown Document",
 
-                            purpose = p.Purpose_Description,
+                            progress = pg != null ? pg.Progress_Description : "Processing",
+
+                            purpose = p != null ? p.Purpose_Description : "N/A",
+
                             submittedDate = r.Created_At,
-                            contact = res.Contact_Number,
 
-                            estimatedCompletion = s != null
-                                ? s.Estimation_Completion_Time
-                                : 0,
+                            contact = res != null ? res.Contact_Number : "",
 
-                            queuePosition = s != null
-                                ? s.Queue_Position
-                                : 0
+                            estimatedCompletion = s != null ? s.Estimation_Completion_Time : 0,
+
+                            queuePosition = s != null ? s.Queue_Position : 0
                         }
                     ).ToList();
 
@@ -342,8 +345,17 @@ namespace iKonnekta_51.Controllers
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new
+                {
+                    success = false,
+                    message = "Error loading tracking requests"
+                }, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult cancelRequest(int requestId)

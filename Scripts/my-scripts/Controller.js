@@ -600,26 +600,24 @@
         });
     };
     // Tracking request
-    $scope.requests = [];
+    $scope.requests = {};
 
     $scope.loadTrackingRequests = function () {
         var storedUser = sessionStorage.getItem("user");
-        if (!storedUser) return;
+        if (!storedUser) {
+            return
+        };
 
         var user = JSON.parse(storedUser);
-        if (!user || !user.userId) return;
+        if (!user || !user.userId) {
+            return
+        };
 
-        $scope.requests = []; // 🔥 important reset before load
 
-        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.residentId);
+        var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
 
         Service.then(function (response) {
-
-            if (Array.isArray(response.data)) {
-                $scope.requests = response.data;
-            } else {
-                $scope.requests = [];
-            }
+            $scope.requests = response.data || [];
 
         });
     };

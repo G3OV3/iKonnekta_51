@@ -70,13 +70,14 @@
     }
     // Tracking request
     this.getTrackingRequestsService = function (residentId) {
-        return $http({
+        var response= $http({
             url: "/Resident/getTrackingRequests",
             method: "post",
             data: {
                 residentId: residentId
             }
         });
+        return response;
     };
     this.cancelRequestService = function (requestId) {
         return $http({

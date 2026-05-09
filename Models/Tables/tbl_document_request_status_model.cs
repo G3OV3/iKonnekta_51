@@ -9,7 +9,7 @@ namespace iKonnekta_51.Models.Tables
     {
         public int Request_Status_ID { get; set; }
 
-        public int Progress_ID { get; set; } // MUST match SQL
+        public int Progress_ID { get; set; } 
 
         public decimal Estimation_Completion_Time { get; set; }
 
