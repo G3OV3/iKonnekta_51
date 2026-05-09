@@ -94,4 +94,10 @@
         return $http.get("/VStaff/GetListOfArchives")
     }
     // Staff
+    this.getStaffDashboardStatsService = function () {
+        return $http.get("/VStaff/getStaffDashboardStats");
+    };
+    this.getAllRecentRequestsService2 = function () {
+        return $http.get("/VStaff/GetAllRecentRequests");
+    };
 });

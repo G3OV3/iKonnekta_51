@@ -653,4 +653,20 @@
     };
     // Staff
     // cards
+    $scope.staffDashboard = {};
+    $scope.loadStaffDashboard = function () {
+        var Service = iKonnekta_51_Service.getStaffDashboardStatsService();
+        Service.then(function (response) {
+            $scope.staffDashboard = response.data;
+        });
+    };
+    $scope.loadStaffDashboard();
+    // list
+    $scope.recentRequests2 = [];
+    $scope.loadRecentRequests2 = function () {
+        var Service = iKonnekta_51_Service.getAllRecentRequestsService2();
+        Service.then(function (response) {
+            $scope.recentRequests2 = response.data;
+        });
+    };
 });
