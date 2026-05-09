@@ -7,11 +7,11 @@ using System.Web;
 
 namespace iKonnekta_51.Models.Maps
 {
-    public class tbl_Document_Request_Status_Map : EntityTypeConfiguration<tbl_document_request_status_model>
+    public class tbl_Document_Request_Status_Map: EntityTypeConfiguration<tbl_document_request_status_model>
     {
         public tbl_Document_Request_Status_Map()
         {
-            HasKey(i => i.Request_Status_ID);
+            HasKey(x => x.Request_Status_ID);
             ToTable("tbl_document_request_status");
         }
     }

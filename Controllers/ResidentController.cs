@@ -42,25 +42,33 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var data = (from r in db.tbl_Document_Requests
-                                join s in db.tbl_Document_Request_Status
-                                on r.Request_Status_ID equals s.Request_Status_ID
-                                where r.Resident_ID == residentId
-                                select new
-                                {
-                                    r.Request_Status_ID,
-                                    s.Request_Status_Description
-                                }).ToList();
+                    var data = (
+                        from r in db.tbl_Document_Requests
+
+                        join s in db.tbl_Document_Request_Status
+                            on r.Request_Status_ID equals s.Request_Status_ID
+
+                        join pg in db.tbl_request_progress
+                            on s.Progress_ID equals pg.Progress_ID
+
+                        where r.Resident_ID == residentId
+
+                        select new
+                        {
+                            ProgressId = pg.Progress_ID
+                        }
+
+                    ).ToList();
 
                     var result = new
                     {
                         total = data.Count,
 
-                        processing = data.Count(x => x.Request_Status_ID == 1),
+                        processing = data.Count(x => x.ProgressId == 1),
 
-                        ready = data.Count(x => x.Request_Status_ID == 2),
+                        ready = data.Count(x => x.ProgressId == 2),
 
-                        completed = data.Count(x => x.Request_Status_ID == 3)
+                        completed = data.Count(x => x.ProgressId == 3)
                     };
 
                     return Json(result, JsonRequestBehavior.AllowGet);
@@ -68,8 +76,19 @@ namespace iKonnekta_51.Controllers
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
-                return Json(new { total = 0, processing = 0, ready = 0, completed = 0 });
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new
+                {
+                    total = 0,
+                    processing = 0,
+                    ready = 0,
+                    completed = 0
+                });
             }
         }
         public JsonResult getRecentRequestList(int residentId)
@@ -78,31 +97,52 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var data = (from r in db.tbl_Document_Requests
-                                join t in db.tbl_Document_Types
-                                    on r.Document_Type_ID equals t.Document_Type_ID
-                                join p in db.tbl_Request_Purposes
-                                    on r.Purpose_ID equals p.Purpose_ID
-                                join s in db.tbl_Document_Request_Status
-                                    on r.Request_Status_ID equals s.Request_Status_ID
-                                where r.Resident_ID == residentId
-                                orderby r.Created_At descending
-                                select new
-                                {
-                                    Request = r,
-                                    DocumentType = t,
-                                    Purpose = p,
-                                    Status = s
-                                })
-                                .Take(3)
-                                .ToList();
+                    var data = (
+                        from r in db.tbl_Document_Requests
+
+                        join t in db.tbl_Document_Types
+                            on r.Document_Type_ID equals t.Document_Type_ID
+
+                        join p in db.tbl_Request_Purposes
+                            on r.Purpose_ID equals p.Purpose_ID
+
+                        join s in db.tbl_Document_Request_Status
+                            on r.Request_Status_ID equals s.Request_Status_ID
+
+                        join pg in db.tbl_request_progress
+                            on s.Progress_ID equals pg.Progress_ID
+
+                        where r.Resident_ID == residentId
+
+                        orderby r.Created_At descending
+
+                        select new
+                        {
+                            requestId = r.Document_Request_ID,
+
+                            documentType = t.Document_Name,
+
+                            progress = pg.Progress_Description,
+
+                            purpose = p.Purpose_Description,
+
+                            submittedDate = r.Created_At
+                        }
+                    )
+                    .Take(3)
+                    .ToList();
 
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -161,13 +201,9 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-
                     var existingCount = db.tbl_Document_Requests
-
                         .Count(x =>
-
                             x.Resident_ID == requestData.Resident_ID &&
-
                             x.Document_Type_ID == requestData.Document_Type_ID
                         );
 
@@ -180,6 +216,25 @@ namespace iKonnekta_51.Controllers
                         });
                     }
 
+                    // 1. CREATE STATUS FIRST
+                    var status = new tbl_document_request_status_model()
+                    {
+                        Progress_ID = 1, // Processing
+                        Estimation_Completion_Time = 3,
+                        Queue_Position = 0,
+
+                        Requested_At = DateTime.Now,
+                        Processed_At = null,
+                        Completed_At = null,
+                        Released_At = null,
+                        Cancelled_At = null
+                    };
+
+                    db.tbl_Document_Request_Status.Add(status);
+
+                    db.SaveChanges();
+
+                    // 2. CREATE REQUEST USING THE GENERATED STATUS ID
                     var request = new tbl_document_requests_model()
                     {
                         Resident_ID = requestData.Resident_ID,
@@ -192,7 +247,8 @@ namespace iKonnekta_51.Controllers
 
                         Priority_Level_ID = requestData.Priority_Level_ID,
 
-                        Request_Status_ID = 1,
+                        // IMPORTANT
+                        Request_Status_ID = status.Request_Status_ID,
 
                         Created_At = DateTime.Now,
 
@@ -234,27 +290,36 @@ namespace iKonnekta_51.Controllers
                 {
                     var data = (
                         from r in db.tbl_Document_Requests
+
                         join t in db.tbl_Document_Types
                             on r.Document_Type_ID equals t.Document_Type_ID
+
                         join p in db.tbl_Request_Purposes
                             on r.Purpose_ID equals p.Purpose_ID
+
                         join s in db.tbl_Document_Request_Status
                             on r.Request_Status_ID equals s.Request_Status_ID
+
+                        join pg in db.tbl_request_progress
+                            on s.Progress_ID equals pg.Progress_ID
+
                         join res in db.tbl_Residents
                             on r.Resident_ID equals res.Resident_ID
+
                         where r.Resident_ID == residentId
-                              && r.Request_Status_ID == 1 
+
                         orderby r.Created_At descending
 
                         select new
                         {
                             requestId = r.Document_Request_ID,
                             documentType = t.Document_Name,
-                            status = s.Request_Status_Description,
+                            progress = pg.Progress_Description,
                             purpose = p.Purpose_Description,
                             submittedDate = r.Created_At,
                             contact = res.Contact_Number,
-                            estimatedCompletion = s.Estimation_Completion_Time
+                            estimatedCompletion = s.Estimation_Completion_Time,
+                            queuePosition = s.Queue_Position
                         }
                     ).ToList();
 
@@ -264,7 +329,6 @@ namespace iKonnekta_51.Controllers
             catch (Exception ex)
             {
                 errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
-
                 return Json(new { success = false });
             }
         }

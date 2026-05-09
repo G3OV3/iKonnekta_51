@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_ResidentLayout.cshtml";
 }
+
 <div class="app-container">
     <main class="main-content">
         <div class="p-6">
+
             <!-- Header -->
             <h1 class="greeting-user">Track Requests</h1>
             <p class="shortDescription">Monitor the status of your active document requests</p>
@@ -16,78 +18,89 @@
             </div>
 
             <!-- Empty State -->
-            <div ng-if="requests.length === 0"
+            <div ng-if="!requests || requests.length === 0"
                  class="bg-white border border-gray-200 rounded-xl p-16 flex flex-col items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+
                 <h3 class="text-base font-semibold text-gray-800 mb-1">No Active Requests</h3>
                 <p class="text-sm text-gray-400">You have no document requests being tracked.</p>
             </div>
 
-
             <!-- Request Cards -->
-            <div ng-repeat="request in requests"
+            <div ng-repeat="request in requests track by request.requestId"
                  class="bg-white border border-gray-200 rounded-xl p-5 mb-4">
 
-                <!-- Top Row: Icon, Title, Status -->
+                <!-- Top Row -->
                 <div class="flex justify-between items-start mb-4">
+
                     <div class="flex items-center gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
                         <div>
-                            <h3 class="text-base font-bold text-gray-900">{{ request.documentType }}</h3>
-                            <p class="text-xs text-gray-400">Request ID: {{ request.requestId }}</p>
+                            <h3 class="text-base font-bold text-gray-900">
+                                {{ request.documentType }}
+                            </h3>
+
+                            <p class="text-xs text-gray-400">
+                                Request ID: {{ request.requestId }}
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Status Badge -->
-                    <span ng-class="{
-                        'bg-blue-100 text-blue-600 border border-blue-300'   : request.status === 'Processing',
-
-                            }" class="text-xs font-medium px-4 py-1 rounded-full">
-                                        {{ request.status }}
+                    <!-- STATUS (FIXED) -->
+                    <span class="text-xs font-medium px-4 py-1 rounded-full bg-blue-100 text-blue-600 border border-blue-300">
+                        {{ request.progress }}
                     </span>
+
                 </div>
 
-                <!-- Details Grid -->
+                <!-- Details -->
                 <div class="grid grid-cols-2 gap-4 border-t border-dashed border-gray-200 pt-4">
+
                     <div>
                         <p class="text-xs text-gray-400">Purpose</p>
-                        <p class="text-sm font-semibold text-gray-800">{{ request.purpose }}</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            {{ request.purpose }}
+                        </p>
                     </div>
 
                     <div>
                         <p class="text-xs text-gray-400">Submitted Date</p>
                         <p class="text-sm font-semibold text-gray-800">
-                            {{ (request.submittedDate.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd' }}
+                            {{ request.submittedDate | date:'yyyy-MM-dd' }}
                         </p>
                     </div>
+
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 border-t border-dashed border-gray-200 pt-4 mt-4">
+
                     <div>
                         <p class="text-xs text-gray-400">Contact Number</p>
-                        <p class="text-sm font-semibold text-gray-800">{{ request.contact }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-gray-400">Estimated Completion</p>
-                        <p class="text-sm font-semibold text-gray-800">{{ request.estimatedCompletion }}</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            {{ request.contact }}
+                        </p>
                     </div>
 
-                    <!-- Cancel Button (only show when Processing) -->
-                    <div class="col-start-2 flex justify-end" ng-if="request.status === 'Processing'">
+                    <div>
+                        <p class="text-xs text-gray-400">Estimated Completion</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            {{ request.estimatedCompletion }}
+                        </p>
+                    </div>
+
+                    <!-- Cancel Button -->
+                    <div class="col-start-2 flex justify-end"
+                         ng-if="request.progress === 'Processing'">
+
                         <button ng-click="cancelRequest(request)"
                                 class="bg-red-100 text-red-500 border border-red-300 hover:bg-red-200 text-xs font-semibold px-5 py-1.5 rounded-full cursor-pointer">
                             Cancel Request
                         </button>
+
                     </div>
+
                 </div>
 
             </div>
+
         </div>
     </main>
 </div>

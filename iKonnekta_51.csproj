@@ -181,6 +181,7 @@
     <Compile Include="Models\Maps\tbl_OTP_Status_Map.cs" />
     <Compile Include="Models\Maps\tbl_OTP_Types_Map.cs" />
     <Compile Include="Models\Maps\tbl_Priority_Levels_Map.cs" />
+    <Compile Include="Models\Maps\tbl_Request_Progress_Map.cs" />
     <Compile Include="Models\Maps\tbl_Request_Purposes_Map.cs" />
     <Compile Include="Models\Maps\tbl_Residents_Map.cs" />
     <Compile Include="Models\Maps\tbl_Resident_Birth_Details_Map.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Models\Tables\tbl_otp_status_model.cs" />
     <Compile Include="Models\Tables\tbl_otp_types_model.cs" />
     <Compile Include="Models\Tables\tbl_priority_levels_model.cs" />
+    <Compile Include="Models\Tables\tbl_request_progress_model.cs" />
     <Compile Include="Models\Tables\tbl_request_purposes_model.cs" />
     <Compile Include="Models\Tables\tbl_resident_birth_details_model.cs" />
     <Compile Include="Models\Tables\tbl_resident_citizenships_model.cs" />

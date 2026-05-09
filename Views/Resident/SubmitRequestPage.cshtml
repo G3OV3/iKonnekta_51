@@ -22,20 +22,23 @@
             </div>
 
             <!-- Document Type -->
-            <select class="dropdown-label"
-                    ng-model="selectedDocument"
-                    ng-change="resetSpecific()">
+            <div class="mb-4">
+                <label class="dropDown">Document Request <span class="text-red-400">*</span></label>
+                <select class="dropdown-label"
+                        ng-model="selectedDocument"
+                        ng-change="resetSpecific()">
 
-                <option value="">Select Document</option>
+                    <option value="">Select Document</option>
 
-                <option value="1">Barangay Clearance</option>
-                <option value="2">Certificate of Residency</option>
-                <option value="3">Barangay Certificate</option>
-                <option value="4">Certificate of Indigency</option>
-                <option value="5">Certificate of Cohabitation</option>
-                <option value="6">First Time Job Seeker Certificate</option>
+                    <option value="1">Barangay Clearance</option>
+                    <option value="2">Certificate of Residency</option>
+                    <option value="3">Barangay Certificate</option>
+                    <option value="4">Certificate of Indigency</option>
+                    <option value="5">Certificate of Cohabitation</option>
+                    <option value="6">First Time Job Seeker Certificate</option>
 
-            </select>
+                </select>
+            </div>
 
             <!-- Purpose -->
             <div class="mb-4">

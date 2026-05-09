@@ -9,20 +9,17 @@ namespace iKonnekta_51.Models.Tables
     {
         public int Request_Status_ID { get; set; }
 
-        public string Request_Status_Description { get; set; }
+        public int Progress_ID { get; set; } // MUST match SQL
 
-        public string Estimation_Completion_Time { get; set; }
+        public decimal Estimation_Completion_Time { get; set; }
 
         public int Queue_Position { get; set; }
 
         public DateTime Requested_At { get; set; }
 
         public DateTime? Processed_At { get; set; }
-
         public DateTime? Completed_At { get; set; }
-
         public DateTime? Released_At { get; set; }
-
         public DateTime? Cancelled_At { get; set; }
     }
 }

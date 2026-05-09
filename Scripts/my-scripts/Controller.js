@@ -573,14 +573,13 @@
     $scope.loadResidentInfo = function () {
 
         var storedUser = sessionStorage.getItem("user");
-
         if (!storedUser) return;
 
         var user = JSON.parse(storedUser);
 
-        if (!user || !user.userId) return;
+        if (!user || !user.residentId) return;
 
-        var Service = iKonnekta_51_Service.getResidentInfoService(user.userId);
+        var Service = iKonnekta_51_Service.getResidentInfoService(user.residentId);
 
         Service.then(function (response) {
             $scope.residentInfo = response.data || {};
@@ -626,18 +625,23 @@
     $scope.requests = [];
 
     $scope.loadTrackingRequests = function () {
-
         var storedUser = sessionStorage.getItem("user");
         if (!storedUser) return;
 
         var user = JSON.parse(storedUser);
         if (!user || !user.userId) return;
 
+        $scope.requests = []; // 🔥 important reset before load
+
         var Service = iKonnekta_51_Service.getTrackingRequestsService(user.userId);
 
         Service.then(function (response) {
 
-            $scope.requests = response.data || [];
+            if (Array.isArray(response.data)) {
+                $scope.requests = response.data;
+            } else {
+                $scope.requests = [];
+            }
 
         });
     };
@@ -660,7 +664,7 @@
 
                     if (response.data.success) {
 
-                        request.status = "Cancelled";
+                        request.progress = "Cancelled";
 
                         Swal.fire("Cancelled", "Request has been cancelled", "success");
 

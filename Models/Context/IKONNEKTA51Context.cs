@@ -41,8 +41,9 @@ namespace iKonnekta_51.Models.Context
         public virtual DbSet<tbl_request_purposes_model> tbl_Request_Purposes { get; set; }
 
         public virtual DbSet<tbl_document_requests_model> tbl_Document_Requests { get; set; }
-        public virtual DbSet<tbl_document_request_status_model> tbl_Document_Request_Status { get; set; }
+        public DbSet<tbl_document_request_status_model> tbl_Document_Request_Status { get; set; }
 
+        public DbSet<tbl_request_progress_model> tbl_request_progress { get; set; }
         public virtual DbSet<tbl_notification_model> tbl_Notifications { get; set; }
         public virtual DbSet<tbl_document_templates_model> tbl_Document_Templates { get; set; }
         public virtual DbSet<tbl_ai_forecasts_model> tbl_AI_Forecasts { get; set; }
@@ -86,6 +87,7 @@ namespace iKonnekta_51.Models.Context
             modelBuilder.Configurations.Add(new tbl_System_Logs_Map());
             modelBuilder.Configurations.Add(new tbl_Error_Logs_Map());
             modelBuilder.Configurations.Add(new tbl_Priority_Levels_Map());
+            modelBuilder.Configurations.Add(new tbl_Request_Progress_Map());
         }
     }
 }
