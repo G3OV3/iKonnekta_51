@@ -519,11 +519,11 @@
 
         var user = JSON.parse(storedUser);
 
-        if (!user || !user.userId) {
+        if (!user || !user.residentId) {
             return;
         }
 
-        var Service = iKonnekta_51_Service.getDashboardStatsService(user.userId);
+        var Service = iKonnekta_51_Service.getDashboardStatsService(user.residentId);
 
         Service.then(function (response) {
             $scope.dashboardStats = response.data;
@@ -609,7 +609,7 @@
         };
 
         var user = JSON.parse(storedUser);
-        if (!user || !user.userId) {
+        if (!user || !user.residentId) {
             return
         };
         $scope.requests = [];
@@ -650,5 +650,6 @@
             }
         });
     };
-
+    // Staff
+    // cards
 });

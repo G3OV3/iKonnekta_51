@@ -93,4 +93,5 @@
     this.getListOfArchivedResidentsService = function () {
         return $http.get("/VStaff/GetListOfArchives")
     }
+    // Staff
 });

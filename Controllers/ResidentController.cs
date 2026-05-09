@@ -55,20 +55,24 @@ namespace iKonnekta_51.Controllers
 
                         select new
                         {
-                            ProgressId = pg.Progress_ID
+                            progressId = pg.Progress_ID,
+                            createdAt = r.Created_At
                         }
-
                     ).ToList();
+
+                    var today = DateTime.Now.Date;
 
                     var result = new
                     {
                         total = data.Count,
 
-                        processing = data.Count(x => x.ProgressId == 1),
+                        processing = data.Count(x => x.progressId == 1),
 
-                        ready = data.Count(x => x.ProgressId == 2),
+                        ready = data.Count(x => x.progressId == 2),
 
-                        completed = data.Count(x => x.ProgressId == 3)
+                        completed = data.Count(x => x.progressId == 3),
+
+                        todayWorkload = data.Count(x => x.createdAt >= today)
                     };
 
                     return Json(result, JsonRequestBehavior.AllowGet);
@@ -87,7 +91,8 @@ namespace iKonnekta_51.Controllers
                     total = 0,
                     processing = 0,
                     ready = 0,
-                    completed = 0
+                    completed = 0,
+                    todayWorkload = 0
                 });
             }
         }
@@ -113,24 +118,20 @@ namespace iKonnekta_51.Controllers
                             on s.Progress_ID equals pg.Progress_ID
 
                         where r.Resident_ID == residentId
+                              && pg.Progress_ID != 4 // CANCELLED
 
                         orderby r.Created_At descending
 
                         select new
                         {
                             requestId = r.Document_Request_ID,
-
                             documentType = t.Document_Name,
-
                             progress = pg.Progress_Description,
-
                             purpose = p.Purpose_Description,
-
                             submittedDate = r.Created_At
                         }
-                    )
-                    .Take(3)
-                    .ToList();
+
+                    ).Take(5).ToList();
 
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
@@ -143,7 +144,7 @@ namespace iKonnekta_51.Controllers
                     ex.Message
                 );
 
-                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
             }
         }
         // submit request

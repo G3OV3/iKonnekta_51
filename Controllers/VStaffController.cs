@@ -223,6 +223,58 @@ namespace iKonnekta_51.Controllers
                 return Json(new { success = false, message = "An error occurred" }, JsonRequestBehavior.AllowGet);
             }
         }
+        // Dashboard
+        public JsonResult getStaffDashboardStats(int residentId)
+        {
+            try
+            {
+                using (var db = new IKONNEKTA51Context())
+                {
+                    var requests = db.tbl_Document_Requests
+                        .Where(r => r.Resident_ID == residentId)
+                        .ToList();
 
+                    var status = (
+                        from r in db.tbl_Document_Requests
+                        join s in db.tbl_Document_Request_Status
+                            on r.Request_Status_ID equals s.Request_Status_ID
+                        join pg in db.tbl_request_progress
+                            on s.Progress_ID equals pg.Progress_ID
+                        where r.Resident_ID == residentId
+                        select pg.Progress_ID
+                    ).ToList();
+
+                    var today = DateTime.Now.Date;
+
+                    var result = new
+                    {
+                        total = requests.Count,
+                        processing = status.Count(x => x == 1),
+                        ready = status.Count(x => x == 2),
+                        completed = status.Count(x => x == 3),
+                        todayWorkload = requests.Count(x => x.Created_At >= today)
+                    };
+
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                errorHandlerClass.errorHandler(
+                    ex.StackTrace,
+                    ex.InnerException?.ToString(),
+                    ex.Message
+                );
+
+                return Json(new
+                {
+                    total = 0,
+                    processing = 0,
+                    ready = 0,
+                    completed = 0,
+                    todayWorkload = 0
+                });
+            }
+        }
     }
 }
