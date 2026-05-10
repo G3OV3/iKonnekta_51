@@ -44,37 +44,22 @@ namespace iKonnekta_51.Controllers
                 {
                     var data = (
                         from r in db.tbl_Document_Requests
-
                         join s in db.tbl_Document_Request_Status
                             on r.Request_Status_ID equals s.Request_Status_ID
-
                         join pg in db.tbl_request_progress
                             on s.Progress_ID equals pg.Progress_ID
-
                         where r.Resident_ID == residentId
-
-                        select new
-                        {
-                            progressId = pg.Progress_ID,
-                            createdAt = r.Created_At
-                        }
+                        select new { progressId = pg.Progress_ID, createdAt = r.Created_At }
                     ).ToList();
-
                     var today = DateTime.Now.Date;
-
                     var result = new
                     {
                         total = data.Count,
-
                         processing = data.Count(x => x.progressId == 1),
-
                         ready = data.Count(x => x.progressId == 2),
-
                         completed = data.Count(x => x.progressId == 3),
-
                         todayWorkload = data.Count(x => x.createdAt >= today)
                     };
-
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -104,46 +89,25 @@ namespace iKonnekta_51.Controllers
                 {
                     var data = (
                         from r in db.tbl_Document_Requests
-
                         join t in db.tbl_Document_Types
                             on r.Document_Type_ID equals t.Document_Type_ID
-
                         join p in db.tbl_Request_Purposes
                             on r.Purpose_ID equals p.Purpose_ID
-
                         join s in db.tbl_Document_Request_Status
                             on r.Request_Status_ID equals s.Request_Status_ID
-
                         join pg in db.tbl_request_progress
                             on s.Progress_ID equals pg.Progress_ID
-
                         where r.Resident_ID == residentId
-                              && pg.Progress_ID != 4 // CANCELLED
-
+                              && pg.Progress_ID != 4 
                         orderby r.Created_At descending
-
-                        select new
-                        {
-                            requestId = r.Document_Request_ID,
-                            documentType = t.Document_Name,
-                            progress = pg.Progress_Description,
-                            purpose = p.Purpose_Description,
-                            submittedDate = r.Created_At
-                        }
-
+                        select new { requestId = r.Document_Request_ID, documentType = t.Document_Name, progress = pg.Progress_Description, purpose = p.Purpose_Description, submittedDate = r.Created_At }
                     ).Take(3).ToList();
-
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
                 return Json(new List<object>(), JsonRequestBehavior.AllowGet);
             }
         }
@@ -154,45 +118,23 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-
                     var resident = (
-
                         from r in db.tbl_Residents
-
                         join rd in db.tbl_Resident_Details
                         on r.Resident_Details_ID equals rd.Resident_Details_ID
-
                         join rf in db.tbl_Resident_Fullname
                         on rd.Resident_FullName_ID equals rf.Resident_FullName_ID
-
                         join rb in db.tbl_Resident_Birth_Details
                         on rd.Resident_Birth_ID equals rb.Resident_Birth_ID
-
                         where r.Resident_ID == residentId
-
-                        select new
-                        {
-                            firstName = rf.First_Name,
-                            lastName = rf.Last_Name,
-
-                            address = rb.Birth_Place,
-
-                            contact = r.Contact_Number
-                        }
-
+                        select new { firstName = rf.First_Name, lastName = rf.Last_Name, address = rb.Birth_Place, contact = r.Contact_Number }
                     ).FirstOrDefault();
-
                     return Json(resident, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
@@ -202,84 +144,71 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var existingCount = db.tbl_Document_Requests
-                        .Count(x =>
-                            x.Resident_ID == requestData.Resident_ID &&
-                            x.Document_Type_ID == requestData.Document_Type_ID
-                        );
-
+                    var existingCount = db.tbl_Document_Requests.Count(x => x.Resident_ID == requestData.Resident_ID &&x.Document_Type_ID == requestData.Document_Type_ID);
                     if (existingCount >= 3)
                     {
-                        return Json(new
-                        {
-                            success = false,
-                            message = "You can only request the same document 3 times."
-                        });
+                        return Json(new { success = false, message = "You can only request the same document 3 times." });
                     }
+                    var docType = db.tbl_Document_Types.FirstOrDefault(x => x.Document_Type_ID == requestData.Document_Type_ID);
+                    if (docType == null)
+                    {
+                        return Json(new { success = false, message = "Invalid document type."});
+                    }
+                    int GetPriority(string name)
+                    {
+                        if (name == "Barangay Clearance for Business Permit")
+                        {
+                            return 4;
+                        }
+                        if (name == "Certificate of Indigency" || name == "First Time Job Seeker Certificate" || name == "Barangay Clearance")
+                        {
+                            return 3;
+                        }
+                        if (name == "Certificate of Good Moral Character" || name == "Certificate of No Pending Case" || name == "Certificate of Cohabitation" || name == "Certificate of Residency")
+                        {
+                            return 2;
+                        } 
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+                    int priorityLevel = GetPriority(docType.Document_Name);
+                    int estimatedMinutes =
+                        priorityLevel == 4 ? 5 :
+                        priorityLevel == 3 ? 7 :
+                        priorityLevel == 2 ? 8 :
+                        10;
 
-                    // 1. CREATE STATUS FIRST
                     var status = new tbl_document_request_status_model()
                     {
-                        Progress_ID = 1, // Processing
-                        Estimation_Completion_Time = 3,
-                        Queue_Position = 0,
-
-                        Requested_At = DateTime.Now,
-                        Processed_At = null,
-                        Completed_At = null,
-                        Released_At = null,
-                        Cancelled_At = null
+                        Progress_ID = 1,
+                        Estimation_Completion_Time = estimatedMinutes,
+                        Queue_Position = 0, 
+                        Requested_At = DateTime.Now
                     };
-
                     db.tbl_Document_Request_Status.Add(status);
-
                     db.SaveChanges();
-
-                    // 2. CREATE REQUEST USING THE GENERATED STATUS ID
                     var request = new tbl_document_requests_model()
                     {
                         Resident_ID = requestData.Resident_ID,
-
                         Document_Type_ID = requestData.Document_Type_ID,
-
                         Purpose_ID = requestData.Purpose_ID,
-
                         Quantity = requestData.Quantity,
-
-                        Priority_Level_ID = requestData.Priority_Level_ID,
-
-                        // IMPORTANT
+                        Priority_Level_ID = priorityLevel,
                         Request_Status_ID = status.Request_Status_ID,
-
                         Created_At = DateTime.Now,
-
                         Edited_At = DateTime.Now
                     };
-
                     db.tbl_Document_Requests.Add(request);
-
                     db.SaveChanges();
-
-                    return Json(new
-                    {
-                        success = true,
-                        message = "Document request submitted successfully."
-                    });
+                    return Json(new { success = true, message = "Request submitted successfully", priorityLevel, estimatedMinutes});
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-
-                return Json(new
-                {
-                    success = false,
-                    message = "An error occurred"
-                });
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+                return Json(new { success = false, message = "Error occurred"});
             }
         }
         // tracking request
@@ -291,72 +220,34 @@ namespace iKonnekta_51.Controllers
                 {
                     var data = (
                         from r in db.tbl_Document_Requests
-
-                            // Document Type (LEFT JOIN)
                         join t in db.tbl_Document_Types
                             on r.Document_Type_ID equals t.Document_Type_ID into tGroup
                         from t in tGroup.DefaultIfEmpty()
-
-                            // Purpose (LEFT JOIN)
                         join p in db.tbl_Request_Purposes
                             on r.Purpose_ID equals p.Purpose_ID into pGroup
                         from p in pGroup.DefaultIfEmpty()
-
-                            // Status (LEFT JOIN)
                         join s in db.tbl_Document_Request_Status
                             on r.Request_Status_ID equals s.Request_Status_ID into sGroup
                         from s in sGroup.DefaultIfEmpty()
-
-                            // Progress (LEFT JOIN)
                         join pg in db.tbl_request_progress
                             on s.Progress_ID equals pg.Progress_ID into pgGroup
                         from pg in pgGroup.DefaultIfEmpty()
-
-                            // Resident (optional, but safe if needed)
                         join res in db.tbl_Residents
                             on r.Resident_ID equals res.Resident_ID into resGroup
                         from res in resGroup.DefaultIfEmpty()
-
                         where r.Resident_ID == residentId
-
                         orderby r.Created_At descending
-
-                        select new
-                        {
-                            requestId = r.Document_Request_ID,
-
-                            documentType = t.Document_Name,
-
-                            progress = pg.Progress_Description,
-
-                            purpose = p.Purpose_Description,
-
-                            submittedDate = r.Created_At,
-
-                            contact = res.Contact_Number,
-
-                            estimatedCompletion = s.Estimation_Completion_Time,
-
-                            queuePosition = s.Queue_Position
-                        }
+                        select new { requestId = r.Document_Request_ID, documentType = t.Document_Name, progress = pg.Progress_Description,
+                                     purpose = p.Purpose_Description, submittedDate = r.Created_At, contact = res.Contact_Number, estimatedCompletion = s.Estimation_Completion_Time,
+                                     queuePosition = s.Queue_Position }
                     ).ToList();
-
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-
-                return Json(new
-                {
-                    success = false,
-                    message = "Error loading tracking requests"
-                }, JsonRequestBehavior.AllowGet);
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+                return Json(new { success = false, message = "Error loading tracking requests"}, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult cancelRequest(int requestId)
@@ -365,32 +256,20 @@ namespace iKonnekta_51.Controllers
             {
                 using (var db = new IKONNEKTA51Context())
                 {
-                    var request = db.tbl_Document_Requests
-                                    .FirstOrDefault(r => r.Document_Request_ID == requestId);
-
+                    var request = db.tbl_Document_Requests.FirstOrDefault(r => r.Document_Request_ID == requestId);
                     if (request == null)
                     {
-                        return Json(new { success = false, message = "Request not found" },
-                            JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, message = "Request not found" }, JsonRequestBehavior.AllowGet);
                     }
-
                     db.tbl_Document_Requests.Remove(request);
                     db.SaveChanges();
-
-                    return Json(new { success = true, message = "Request deleted" },
-                        JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, message = "Request deleted" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                errorHandlerClass.errorHandler(
-                    ex.StackTrace,
-                    ex.InnerException?.ToString(),
-                    ex.Message
-                );
-
-                return Json(new { success = false, message = "Error deleting request" },
-                    JsonRequestBehavior.AllowGet);
+                errorHandlerClass.errorHandler(ex.StackTrace, ex.InnerException?.ToString(), ex.Message);
+                return Json(new { success = false, message = "Error deleting request" }, JsonRequestBehavior.AllowGet);
             }
         }
 

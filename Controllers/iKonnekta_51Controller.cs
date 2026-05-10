@@ -180,7 +180,7 @@ namespace iKonnekta_51.Controllers
                         Resident_ID = resident.Resident_ID,
                         Username = userInfo.Username,
                         Password = BCrypt.Net.BCrypt.HashPassword(userInfo.Password),
-                        Role_ID = 2,
+                        Role_ID = 1,
                         Account_Status_ID = 1,
                         Last_Login = null,
                         Created_At = DateTime.Now,

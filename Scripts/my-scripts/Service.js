@@ -27,6 +27,7 @@
         });
         return response;
     }
+
     this.getRecentRequestListService = function (residentId) {
         return $http({
             url: "/Resident/getRecentRequestList",
