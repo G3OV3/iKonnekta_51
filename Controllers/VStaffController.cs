@@ -311,18 +311,45 @@ namespace iKonnekta_51.Controllers
                         select new
                         {
                             requestId = r.Document_Request_ID,
+
                             documentType = t.Document_Name,
+
                             purpose = p.Purpose_Description,
 
                             status = pg.Progress_Description,
 
-                            residentName = res != null ? res.Contact_Number : "Unknown",
+                            residentName = res != null
+                                ? res.Contact_Number
+                                : "Unknown",
 
                             dateRequested = r.Created_At,
 
-                            priority = "Normal" // adjust later if you have priority table
+                            priority =
+
+                                // HIGHEST PRIORITY
+                                t.Document_Name == "Certification for Legal Purposes"
+                                    ? "Highest Priority"
+
+                                // HIGH PRIORITY
+                                : t.Document_Name == "First Time Job Seeker Certificate" ||
+                                  t.Document_Name == "Barangay Clearance" ||
+                                  t.Document_Name == "Barangay Clearance for Business Permit" ||
+                                   t.Document_Name == "Certificate of Indigency"
+                                    ? "High Priority"
+
+                                // MEDIUM PRIORITY
+                                : t.Document_Name == "Certificate of Residency" ||
+                                  t.Document_Name == "Certificate of Cohabitation" ||
+                                  t.Document_Name == "Certificate of Good Moral Character" ||
+                                  t.Document_Name == "Certificate of No Pending Case"
+                                    ? "Medium Priority"
+
+                                // LOW PRIORITY
+                                : "Low Priority"
                         }
-                    ).Take(20).ToList();
+                    )
+                    .Take(3)
+                    .ToList();
 
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
@@ -377,21 +404,70 @@ namespace iKonnekta_51.Controllers
 
                         where r.Resident_ID > 0
 
-                        orderby r.Created_At descending
+                        orderby
+
+                            // ===== PRIORITY SORTING (HIGHEST TO LOWEST) =====
+                            (
+                                t.Document_Name == "Certification for Legal Purposes" ? 1 :
+
+                                t.Document_Name == "Barangay Clearance for Business Permit" ? 2 :
+                                t.Document_Name == "Barangay Clearance" ? 2 :
+                                t.Document_Name == "First Time Job Seeker Certificate" ? 2 :
+                                t.Document_Name == "Certificate of Indigency" ? 2 :
+
+                                t.Document_Name == "Certificate of Residency" ? 3 :
+                                t.Document_Name == "Certificate of Cohabitation" ? 3 :
+                                t.Document_Name == "Certificate of Good Moral Character" ? 3 :
+                                t.Document_Name == "Certificate of No Pending Case" ? 3 :
+
+                                t.Document_Name == "Barangay ID" ? 4 :
+                                t.Document_Name == "Barangay Certificate" ? 4 :
+                                t.Document_Name == "Certificate of Non-Residency" ? 4 : 5
+                            ),
+                            r.Created_At ascending
 
                         select new
                         {
                             requestId = r.Document_Request_ID,
 
-                            residentName = fullname.First_Name + " " + fullname.Middle_Name + " " + fullname.Last_Name,
+                            residentName =
+                                (fullname.First_Name ?? "") + " " +
+                                (fullname.Middle_Name ?? "") + " " +
+                                (fullname.Last_Name ?? ""),
 
                             mobileNumber = res.Contact_Number,
 
                             documentType = t.Document_Name,
+
                             purpose = p.Purpose_Description,
+
                             status = pg.Progress_Description,
+
                             dateRequested = r.Created_At,
-                            priority = "Normal"
+
+                            // ===== DISPLAY PRIORITY =====
+                            priority =
+                                (t.Document_Name == "Certification for Legal Purposes")
+                                    ? "Highest Priority"
+
+                                : (t.Document_Name == "Barangay Clearance for Business Permit" ||
+                                   t.Document_Name == "Barangay Clearance" ||
+                                   t.Document_Name == "Certificate of Indigency" || 
+                                   t.Document_Name == "First Time Job Seeker Certificate")
+                                    ? "High Priority"
+
+                                : (t.Document_Name == "Certificate of Residency" ||
+                                   t.Document_Name == "Certificate of Cohabitation" ||
+                                   t.Document_Name == "Certificate of Good Moral Character" ||
+                                   t.Document_Name == "Certificate of No Pending Case")
+                                    ? "Medium Priority"
+
+                                : (t.Document_Name == "Barangay ID" ||
+                                   t.Document_Name == "Certificate of Non-Residency" ||
+                                   t.Document_Name == "Barangay Certificate")
+                                    ? "Low Priority"
+
+                                : "Low Priority"
                         }
                     ).ToList();
 

@@ -315,6 +315,7 @@
     };
 
     $scope.options = {
+
         // Document_Type_ID = 1
         1: [
             { value: 1, label: 'Job Application' },
@@ -366,9 +367,64 @@
             { value: 27, label: 'NBI / Police Clearance Requirement' },
             { value: 28, label: 'Employment Application' },
             { value: 29, label: 'Pre-employment Requirements' }
-        ]
-    };
+        ],
 
+        // Document_Type_ID = 7
+        7: [
+            { value: 30, label: 'Proof of Non-Residency' },
+            { value: 31, label: 'School Requirement' },
+            { value: 32, label: 'Employment Requirement' },
+            { value: 33, label: 'Government Transaction' },
+            { value: 34, label: 'Legal Verification' }
+        ],
+
+        // Document_Type_ID = 8
+        8: [
+            { value: 35, label: 'Valid Local Identification' },
+            { value: 36, label: 'Proof of Residency' },
+            { value: 37, label: 'Senior Citizen Verification' },
+            { value: 38, label: 'Student Identification' },
+            { value: 39, label: 'General Identification' }
+        ],
+
+        // Document_Type_ID = 9
+        9: [
+            { value: 40, label: 'School Enrollment' },
+            { value: 41, label: 'Scholarship Application' },
+            { value: 42, label: 'Employment Requirement' },
+            { value: 43, label: 'Internship Requirement' },
+            { value: 44, label: 'Character Verification' }
+        ],
+
+        // Document_Type_ID = 10
+        10: [
+            { value: 45, label: 'Employment Requirement' },
+            { value: 46, label: 'Legal Requirement' },
+            { value: 47, label: 'Court Compliance' },
+            { value: 48, label: 'Government Transaction' },
+            { value: 49, label: 'Travel Requirement' }
+        ],
+
+        // Document_Type_ID = 11
+        11: [
+            { value: 50, label: 'New Business Permit' },
+            { value: 51, label: 'Business Renewal' },
+            { value: 52, label: 'Mayor’s Permit Requirement' },
+            { value: 53, label: 'DTI Registration' },
+            { value: 54, label: 'Business Compliance' }
+        ],
+
+        // Document_Type_ID = 12
+        /*
+        12: [
+            { value: 55, label: 'Court Requirement' },
+            { value: 56, label: 'Affidavit Support' },
+            { value: 57, label: 'Legal Documentation' },
+            { value: 58, label: 'Case Filing' },
+            { value: 59, label: 'Attorney Requirement' },
+            { value: 60, label: 'Judicial Proceeding' }
+        ]*/
+    };
     $scope.isPurposeAndDocSelected = function () {
         if ($scope.selectedDocument === '' && $scope.selectedPurpose === '') {
             Swal.fire({

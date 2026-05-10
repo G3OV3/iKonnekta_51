@@ -88,7 +88,7 @@
                             </td>
 
                             <td class="px-4 py-4">
-                                {{ (req.dateRequested .replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd' }}
+                                {{ (req.dateRequested.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd hh:mm a' }}
                             </td>
 
                             <td class="px-4 py-4">{{ req.priority }}</td>

@@ -131,7 +131,7 @@ namespace iKonnekta_51.Controllers
                             submittedDate = r.Created_At
                         }
 
-                    ).Take(5).ToList();
+                    ).Take(3).ToList();
 
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }

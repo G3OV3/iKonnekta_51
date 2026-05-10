@@ -133,7 +133,7 @@
                     <!-- Date -->
                     <p class="text-xs text-gray-400 mt-2">
                         Submitted:
-                        {{ (request.submittedDate.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd' }}
+                        {{ (request.submittedDate.replace('/Date(', '').replace(')/', '') * 1) | date:'yyyy-MM-dd hh:mm a' }}
                     </p>
 
                 </div>
